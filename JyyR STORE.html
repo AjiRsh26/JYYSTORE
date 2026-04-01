@@ -6,6 +6,7 @@
 <title>JYYR STORE</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
 body {
   margin:0;
   font-family:'Orbitron',sans-serif;
@@ -15,75 +16,316 @@ body {
   animation:gradientMove 10s ease infinite;
   transition:0.3s;
 }
+
+/* Animasi kedap-kedip untuk logo */
+@keyframes pulseGlowLogo {
+  0%, 100% {
+    box-shadow: 0 0 5px #b266ff, 0 0 8px #b266ff;
+  }
+  50% {
+    box-shadow: 0 0 7px #00bfff, 0 0 15px #00ffd5;
+  }
+}
+
 @keyframes gradientMove{
   0%{background-position:0%}
   50%{background-position:100%}
   100%{background-position:0%}
 }
-.header{text-align:center;padding:15px;color:#00ffd5;}
-.header img{width:40px;height:40px;vertical-align:middle;margin-right:10px;border-radius:8px;}
-.search, select {width:90%;margin:5px auto;padding:10px;border-radius:10px;border:none;display:block;}
-.banner{margin:15px;background:linear-gradient(45deg,#4e54c8,#8f94fb);padding:20px;border-radius:15px;text-align:center;}
-.container{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;padding:15px;}
-.card{background:rgba(255,255,255,0.05);border-radius:15px;padding:10px;text-align:center;position:relative;transition:0.3s;}
-.card:hover{transform: translateY(-5px) scale(1.02);box-shadow:0 0 20px rgba(0,255,213,0.4);}
+
+/* Animasi kedap-kedip */
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 1px #00ffd5,
+      0 0 3px #00ffd5,
+      0 0 6px #00ffd5;
+  }
+  50% {
+    text-shadow:
+      0 0 2px #00ffd5,
+      0 0 6px #00ffd5,
+      0 0 12px #00ffd5;
+  }
+}
+
+/* Terapkan ke header */
+.header, .banner, .card h3 {
+  color: #00ffd5;
+  animation: pulseGlow 1.5s infinite;
+}
+
+.header {
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;        /* ukuran sedikit lebih besar */
+  color: #b266ff;         /* ungu neon */
+  font-weight: bold;
+  text-shadow:
+    0 0 5px #b266ff,
+    0 0 10px #00ffd5,
+    0 0 20px #00bfff,
+    0 0 40px #b266ff;
+  animation: glowText 1.5s infinite;
+}
+
+/* Animasi kedap-kedip glow */
+@keyframes glowText {
+  0%, 100% {
+    text-shadow:
+      0 0 3px #00ffd5,
+      0 0 7px #b266ff,
+      0 0 15px #00bfff,
+      0 0 30px #b266ff;
+  }
+  50% {
+    text-shadow:
+      0 0 6px #00ffd5,
+      0 0 14px #b266ff,
+      0 0 30px #00bfff,
+      0 0 50px #b266ff;
+  }
+}
+
+.header img {
+  width: 50px;   /* ukuran lebih besar */
+  height: 50px;  /* ukuran lebih besar */
+  vertical-align: middle;
+  margin-right: 1px;
+  border-radius: 2px;
+  animation: pulseGlowLogo 2.5s infinite; /* glow kedap-kedip */
+}
+
+.search, select {
+  width:70%;
+  margin:5px auto;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  display:block;
+  font-size:15px;
+  background: rgba(0,255,213,0.1);
+  color: #00ffd5; /* teks hijau neon */
+  text-shadow:
+    0 0 1px #black,  /* glow tipis */
+    0 0 15px #black;  /* glow medium */
+  border: 1px solid #00ffd5;
+  transition: 1.3s;
+}
+
+.search:focus {
+  outline: none;
+  background: rgba(0,255,213,0.15); /* tetap ringan saat fokus */
+}
+.search:focus {
+  outline: none;
+  box-shadow: 0 0 10px #00ffd5, 0 0 20px #00ffd5;
+  background: rgba(0,255,213,0.15);
+}
+
+.banner {
+  margin:10px;
+  background:linear-gradient(45deg,#3498db,#8f94fb);
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+  font-size:16px;
+  color: #00ffd5; /* teks hijau neon */
+  text-shadow:
+    0 0 1px #00ffd5,
+    0 0 3px #00ffd5,
+    0 0 6px #00ffd5; /* glow efek */
+}
+
+.container{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:10px;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:8px;
+  text-align:center;
+  position:relative;
+  transition:0.3s;
+  font-size:13px;
+}
+.card:hover{
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:0 0 15px rgba(0,255,213,0.3);
+}
 .card:active{transform: scale(0.97);}
-.card img{width:100%;border-radius:10px;transition:0.3s;}
-.card:hover img{transform:scale(1.05);}
-.badge{position:absolute;top:5px;left:5px;background:red;padding:3px 8px;border-radius:10px;font-size:11px;}
-.desc{display:none;font-size:12px;}
+.card img{
+  width:90%;
+  margin:0 auto;
+  border-radius:8px;
+  transition:0.3s;
+}
+.card:hover img{transform:scale(1.03);}
+.badge{
+  position:absolute;
+  top:4px;
+  left:4px;
+  background:red;
+  padding:2px 6px;
+  border-radius:8px;
+  font-size:10px;
+}
+.desc{display:none;font-size:11px;}
 .desc.show{display:block;}
-.harga{background:#3498db;padding:5px;border-radius:10px;margin:5px 0;}
-.stok{font-size:12px;margin:3px 0;}
-.qty{display:flex;justify-content:center;gap:10px;margin:5px 0;}
-.qty button{background:#00ffd5;border:none;padding:5px;border-radius:5px;transition:0.2s;cursor:pointer;}
-.btn{width:100%;margin-top:5px;padding:8px;border:none;border-radius:10px;transition:0.2s;cursor:pointer;}
+.harga{
+  background:#3498db;
+  padding:4px;
+  border-radius:8px;
+  margin:4px 0;
+  font-size:13px;
+}
+.stok{font-size:11px;margin:2px 0;}
+.qty{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin:4px 0;
+}
+.qty button{
+  background:#00ffd5;
+  border:none;
+  padding:3px 6px;
+  border-radius:4px;
+  transition:0.2s;
+  cursor:pointer;
+  font-size:12px;
+}
+.btn{
+  width:100%;
+  margin-top:4px;
+  padding:6px;
+  border:none;
+  border-radius:8px;
+  transition:0.2s;
+  cursor:pointer;
+  font-size:12px;
+}
 .buy{background:#2ecc71;color:white;}
-.btn:active, .qty button:active{transform: scale(0.95);box-shadow:0 0 15px #00ffd5,0 0 30px #00ffd5;}
-.review{font-size:12px;text-align:left;margin-top:5px;background:rgba(255,255,255,0.05);padding:5px;border-radius:8px;max-height:80px;overflow:auto;}
-.avgRating{margin:5px 0;font-size:14px;}
-.cart{position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.95);padding:15px;border-radius:20px 20px 0 0;transition:0.3s;}
-.cart.hide{transform:translateY(100%);}
-.cart-toggle{position:fixed;bottom:20px;right:20px;background:#00ffd5;padding:15px;border-radius:50%;cursor:pointer;}
-.toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%);background:#00ffd5;color:black;padding:10px;border-radius:20px;display:none;}
-.card-buttons{display:flex;justify-content:space-between;margin-top:5px;}
+.btn:active, .qty button:active{
+  transform: scale(0.95);
+  box-shadow:0 0 10px #00ffd5,0 0 20px #00ffd5;
+}
+.review{
+  font-size:11px;
+  text-align:left;
+  margin-top:4px;
+  background:rgba(255,255,255,0.05);
+  padding:4px;
+  border-radius:6px;
+  max-height:70px;
+  overflow:auto;
+}
+.avgRating{margin:4px 0;font-size:12px;}
+
+/* CART versi kecil untuk HP */
+.cart{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:400px;
+  background:rgba(0,0,0,0.95);
+  padding:8px;
+  border-radius:12px 12px 0 0;
+  transition:0.3s;
+  font-size:14px;
+}
+.cart input{
+  font-size:13px;
+  padding:4px;
+}
+.cart p{
+  font-size:13px;
+}
+.cart .btn.buy{
+  padding:5px;
+  font-size:13px;
+}
+.cart.hide{transform:translateY(120%);}
+
+.cart-toggle{
+  position:fixed;
+  bottom:15px;
+  right:15px;
+  background:#00ffd5;
+  padding:12px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:16px;
+}
+.toast{
+  position:fixed;
+  bottom:120px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#00ffd5;
+  color:black;
+  padding:8px 12px;
+  border-radius:16px;
+  display:none;
+  font-size:13px;
+}
+.card-buttons{display:flex;justify-content:space-between;margin-top:4px;}
 
 /* Riwayat di kanan atas */
 #historyBox{
-    position:fixed;
-    top:20px;
-    right:20px;
-    width:300px;
-    max-height:70%;
-    background:rgba(0,0,0,0.95);
-    padding:15px;
-    border-radius:15px;
-    overflow:auto;
-    display:none;
-    z-index:999;
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:250px;
+  max-height:65%;
+  background:rgba(0,0,0,0.95);
+  padding:10px;
+  border-radius:12px;
+  overflow:auto;
+  display:none;
+  z-index:999;
+  font-size:12px;
 }
-#historyBox button{margin-bottom:10px;}
+#historyBox button{margin-bottom:8px;font-size:12px;}
 #historyToggle{
-    position:fixed;
-    top:20px;
-    right:20px;
-    background:#00ffd5;
-    color:black;
-    padding:10px;
-    border-radius:50%;
-    cursor:pointer;
-    z-index:1000;
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#00ffd5;
+  color:black;
+  padding:8px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:1000;
+  font-size:14px;
 }
+
+/* warna teks produk */
+.card h3 {
+  color: #00ffd5; /* teks hijau neon */
+  text-shadow:
+    0 0 1px #00ffd5,
+    0 0 3px #00ffd5,
+    0 0 6px #00ffd5; /* efek glow */
+  transition: 0.3s;
+}
+
 </style>
 </head>
 <body>
 
-<div class="header">
-  <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo Store">
-  JYYR STORE
+<div class="header">  
+  <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo Store">  
+  JYYR STORE  
 </div>
 
-<input type="text" class="search" placeholder="Cari produk..." onkeyup="searchProduk(this.value)">
+<input type="text" class="search" placeholder="🔍Cari produk..." onkeyup="searchProduk(this.value)">
 
 <div style="text-align:center;margin:5px;">
   <label><input type="checkbox" value="premium" onchange="filterProduk()"> Premium</label>
@@ -104,50 +346,61 @@ body {
 <div class="banner">Apps Premium 🔥</div>
 <div class="container">
 
-<!-- Produk ALIGHT -->
-<div class="card" data-name="alight" data-category="premium">
-  <div class="badge">🔥 HOT</div>
-  <img src="https://i.ibb.co.com/DDnvfpry/amprem.png">
-  <h3>ALIGHT MOTION</h3>
-  <p class="desc">✔ Premium 1 Tahun<br>✔ No Watermark</p>
-  <button onclick="toggleDesc(this)">Detail</button>
-  <p class="harga">Rp 10.000</p>
-  <p class="stok" id="stok-A">Stok: 10</p>
-  <p class="avgRating" id="avg-ALIGHT MOTION">⭐ 0.0</p>
-  <div class="qty">
-    <button onclick="kurang('A')">-</button>
-    <span id="A">0</span>
-    <button onclick="tambah('A')">+</button>
-  </div>
-  <div class="card-buttons">
-    <button class="btn" onclick="toggleWishlist('ALIGHT MOTION')">❤️ Favorit</button>
-    <button class="btn" onclick="tambahReview('ALIGHT MOTION')">⭐ Review</button>
-  </div>
-  <button class="btn buy" onclick="tambah('A')">Beli</button>
-  <div class="review" id="review-ALIGHT MOTION"></div>
-</div>
-
-<!-- Produk CAPCUT -->
-<div class="card" data-name="capcut" data-category="pro">
-  <div class="badge">⭐ BEST SELLER</div>
-  <img src="https://i.ibb.co.com/1tTwJKSc/Proyek-Baru-8-2-F337-C6.png">
-  <h3>CAPCUT</h3>
-  <p class="desc">✔ Pro Account<br>✔ No Watermark</p>
-  <button onclick="toggleDesc(this)">Detail</button>
-  <p class="harga">Rp 20.000</p>
-  <p class="stok" id="stok-B">Stok: 5</p>
-  <p class="avgRating" id="avg-CAPCUT">⭐ 0.0</p>
-  <div class="qty">
-    <button onclick="kurang('B')">-</button>
-    <span id="B">0</span>
-    <button onclick="tambah('B')">+</button>
-  </div>
-  <div class="card-buttons">
-    <button class="btn" onclick="toggleWishlist('CAPCUT')">❤️ Favorit</button>
-    <button class="btn" onclick="tambahReview('CAPCUT')">⭐ Review</button>
-  </div>
-  <button class="btn buy" onclick="tambah('B')">Beli</button>
-  <div class="review" id="review-CAPCUT"></div>
+<!-- Produk ALIGHT -->  <div class="card" data-name="alight" data-category="premium">  
+  <div class="badge">🔥 HOT</div>  
+  <img src="https://i.ibb.co.com/DDnvfpry/amprem.png">  
+  <h3>ALIGHT MOTION</h3>  
+  <p class="desc">
+<b>DIBACA SEBELUM ORDER</b><br><br>
+PRIVATE (ALL DEVICE)<br>
+> 1 Tahun - Rp 10.000<br>
+> NO WATERMARK, NO IKLAN, BISA MEMAKAI PRESET DIATAS 5MB (SEMUA PRESET)<br><br>
+EMAIL SANGAT WAJIB BARU!<br>
+(EMAIL LAMA TIDAK AKAN DI PROSES)<br><br>
+<b>TAHAP ORDER</b><br>
+> PEMBAYARAN<br>
+> KIRIM EMAIL YANG BARU DIBIKIN / FRESH<br>
+> PROSES<br><br>
+<b>PAYMENT</b><br>
+> Dana<br>
+> Qris - All Payment<br><br>
+(SPAM/MINTA PROSES CEPAT = TIDAK ADA GARANSI)
+</p>  
+  <button onclick="toggleDesc(this)">Detail</button>  
+  <p class="harga">Rp 10.000</p>  
+  <p class="stok" id="stok-A">Stok: 10</p>  
+  <p class="avgRating" id="avg-ALIGHT MOTION">⭐ 0.0</p>  
+  <div class="qty">  
+    <button onclick="kurang('A')">-</button>  
+    <span id="A">0</span>  
+    <button onclick="tambah('A')">+</button>  
+  </div>  
+  <div class="card-buttons">  
+    <button class="btn" onclick="toggleWishlist('ALIGHT MOTION')">❤️ Favorit</button>  
+    <button class="btn" onclick="tambahReview('ALIGHT MOTION')">⭐ Review</button>  
+  </div>  
+  <button class="btn buy" onclick="tambah('A')">BELI</button>  
+  <div class="review" id="review-ALIGHT MOTION"></div>  
+</div>  <!-- Produk CAPCUT -->  <div class="card" data-name="capcut" data-category="pro">  
+  <div class="badge">⭐ BEST SELLER</div>  
+  <img src="https://i.ibb.co.com/1tTwJKSc/Proyek-Baru-8-2-F337-C6.png">  
+  <h3>CAPCUT</h3>  
+  <p class="desc">✔ Pro Account<br>✔ No Watermark<br>✔Support All DEVICE</p>
+  <button onclick="toggleDesc(this)">Detail</button>  
+  <p class="harga">Rp 20.000</p>  
+  <p class="stok" id="stok-B">Stok: 5</p>  
+  <p class="avgRating" id="avg-CAPCUT">⭐ 0.0</p>  
+  <div class="qty">  
+    <button onclick="kurang('B')">-</button>  
+    <span id="B">0</span>  
+    <button onclick="tambah('B')">+</button>  
+  </div>  
+  <div class="card-buttons">  
+    <button class="btn" onclick="toggleWishlist('CAPCUT')">❤️ Favorit</button>  
+    <button class="btn" onclick="tambahReview('CAPCUT')">⭐ Review</button>  
+  </div>  
+  <button class="btn buy" onclick="tambah('B')">BELI</button>  
+  <div class="review" id="review-CAPCUT"></div>  
 </div>
 
 </div>
@@ -176,13 +429,13 @@ body {
 </div>
 
 <script>
-// Data
-let cart={A:0,B:0}, harga={A:10000,B:20000}, stok={A:10,B:5};
+// ===== Data =====
+let cart={A:0,B:0}, harga={A:10000,B:20000}, stok={A:216,B:275};
 let wishlist=JSON.parse(localStorage.getItem("wishlist"))||[];
 let reviewData = JSON.parse(localStorage.getItem("review")) || {};
 let historyData = JSON.parse(localStorage.getItem("history")) || [];
 
-// Cart
+// ===== Cart =====
 function toggleCart(){document.querySelector(".cart").classList.toggle("hide");}
 function tambah(id){if(cart[id]<stok[id]) cart[id]++; update();}
 function kurang(id){if(cart[id]>0) cart[id]--; update();}
@@ -197,20 +450,20 @@ function update(){
   document.getElementById("total").innerText=total;
 }
 
-// Detail
+// ===== Detail =====
 function toggleDesc(btn){btn.previousElementSibling.classList.toggle("show");}
 
-// Search
+// ===== Search =====
 function searchProduk(k){
   k=k.toLowerCase();
   document.querySelectorAll(".card").forEach(c=>c.style.display=c.dataset.name.includes(k)?"block":"none");
   filterProduk(); sortProduk();
 }
 
-// Toast
+// ===== Toast =====
 function toast(t){let el=document.getElementById("toast");el.innerText=t;el.style.display="block";setTimeout(()=>el.style.display="none",2000);}
 
-// Checkout
+// ===== Checkout =====
 function kirimWA(){
   let nama=document.getElementById("nama").value;
   if(!nama){toast("Isi nama!");return;}
@@ -220,7 +473,7 @@ function kirimWA(){
   window.open("https://wa.me/6283890777348?text=Order dari "+nama+"\n"+text+"\nTotal: "+total);
 }
 
-// Wishlist
+// ===== Wishlist =====
 function toggleWishlist(nama){
   if(wishlist.includes(nama)){wishlist=wishlist.filter(x=>x!==nama);toast("❌ Dihapus dari Wishlist");}
   else{wishlist.push(nama);toast("❤️ Ditambahkan ke Wishlist");}
@@ -228,7 +481,7 @@ function toggleWishlist(nama){
 }
 function lihatWishlist(){alert(wishlist.join("\n")||"Kosong");}
 
-// Review
+// ===== Review =====
 function tambahReview(nama){
   let bintang = prompt("Kasih bintang (1-5):");
   let komen = prompt("Komentar:");
@@ -243,27 +496,21 @@ function tampilReview(){for(let key in reviewData){let el=document.getElementByI
 function tampilRating(){for(let key in reviewData){let el=document.getElementById("avg-"+key); if(el){let totalBintang = reviewData[key].reduce((sum,r)=>sum+r.split(" - ")[0].length,0); let avg = (totalBintang / reviewData[key].length).toFixed(1); el.innerText=`⭐ ${avg}`;}}}
 tampilReview(); tampilRating();
 
-// Riwayat
+// ===== Riwayat =====
 function simpanRiwayat(text,total){historyData.push({waktu:new Date().toLocaleString(),pesanan:text,total:total}); localStorage.setItem("history",JSON.stringify(historyData));}
 function lihatRiwayat(){
-    let html="";
-    if(historyData.length===0){
-        html="Belum ada pesanan";
-    } else {
-        historyData.slice().reverse().forEach(item=>{
-            html+=`<div style="border-bottom:1px solid #555;padding:5px">
-            <small>${item.waktu}</small><br>${item.pesanan.replace(/\n/g,"<br>")}<br><b>Total: Rp ${item.total}</b></div>`;
-        });
-    }
-    document.getElementById("historyList").innerHTML=html;
-    toggleHistory();
+  let html="";
+  if(historyData.length===0){ html="Belum ada pesanan"; } 
+  else { historyData.slice().reverse().forEach(item=>{
+      html+=`<div style="border-bottom:1px solid #555;padding:4px">
+      <small>${item.waktu}</small><br>${item.pesanan.replace(/\n/g,"<br>")}<br><b>Total: Rp ${item.total}</b></div>`;
+  });}
+  document.getElementById("historyList").innerHTML=html;
+  toggleHistory();
 }
-function toggleHistory(){
-    const box = document.getElementById("historyBox");
-    box.style.display = (box.style.display==='block')?'none':'block';
-}
+function toggleHistory(){const box=document.getElementById("historyBox"); box.style.display=(box.style.display==='block')?'none':'block';}
 
-// Filter & Sort
+// ===== Filter & Sort =====
 function filterProduk(){
   const checkedCats = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
   let hargaFilter=document.getElementById("filterHarga").value;
@@ -292,6 +539,18 @@ function sortProduk(){
   });
   cards.forEach(c=>container.appendChild(c));
 }
+
+// ===== Animate placeholder =====
+const placeholderText = "🔍Cari produk...";
+let index = 0;
+function animatePlaceholder() {
+  const searchInput = document.querySelector(".search");
+  searchInput.setAttribute("placeholder", placeholderText.substring(0,index));
+  index++;
+  if(index > placeholderText.length) index=0;
+  setTimeout(animatePlaceholder, 150);
+}
+animatePlaceholder();
 </script>
 
 </body>
