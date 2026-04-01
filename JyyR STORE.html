@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JYYR STORE</title>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
 body {
   margin:0;
   font-family:'Orbitron',sans-serif;
@@ -15,270 +13,286 @@ body {
   background:linear-gradient(270deg,#1a002f,#2c5364);
   background-size:400% 400%;
   animation:gradientMove 10s ease infinite;
+  transition:0.3s;
 }
-
-@keyframes gradientMove {
+@keyframes gradientMove{
   0%{background-position:0%}
   50%{background-position:100%}
   100%{background-position:0%}
 }
-
 .header{text-align:center;padding:15px;color:#00ffd5;}
-
-.search{
-  width:90%;
-  margin:10px auto;
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  display:block;
-}
-
-.banner{
-  margin:15px;
-  background:linear-gradient(45deg,#4e54c8,#8f94fb);
-  padding:20px;
-  border-radius:15px;
-}
-
-.container{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-  padding:15px;
-}
-
-.card{
-  background:rgba(255,255,255,0.05);
-  border-radius:15px;
-  padding:10px;
-  text-align:center;
-  position:relative;
-}
-
-.card img{width:100%;border-radius:10px;}
-
-.badge{
-  position:absolute;
-  top:5px;
-  left:5px;
-  background:red;
-  padding:3px 8px;
-  border-radius:10px;
-  font-size:11px;
-}
-
+.header img{width:40px;height:40px;vertical-align:middle;margin-right:10px;border-radius:8px;}
+.search, select {width:90%;margin:5px auto;padding:10px;border-radius:10px;border:none;display:block;}
+.banner{margin:15px;background:linear-gradient(45deg,#4e54c8,#8f94fb);padding:20px;border-radius:15px;text-align:center;}
+.container{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;padding:15px;}
+.card{background:rgba(255,255,255,0.05);border-radius:15px;padding:10px;text-align:center;position:relative;transition:0.3s;}
+.card:hover{transform: translateY(-5px) scale(1.02);box-shadow:0 0 20px rgba(0,255,213,0.4);}
+.card:active{transform: scale(0.97);}
+.card img{width:100%;border-radius:10px;transition:0.3s;}
+.card:hover img{transform:scale(1.05);}
+.badge{position:absolute;top:5px;left:5px;background:red;padding:3px 8px;border-radius:10px;font-size:11px;}
 .desc{display:none;font-size:12px;}
 .desc.show{display:block;}
-
-.harga{
-  background:#3498db;
-  padding:5px;
-  border-radius:10px;
-}
-
-.qty{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
-
-.qty button{
-  background:#00ffd5;
-  border:none;
-  padding:5px;
-  border-radius:5px;
-}
-
-.btn{
-  width:100%;
-  margin-top:5px;
-  padding:8px;
-  border:none;
-  border-radius:10px;
-}
-
+.harga{background:#3498db;padding:5px;border-radius:10px;margin:5px 0;}
+.stok{font-size:12px;margin:3px 0;}
+.qty{display:flex;justify-content:center;gap:10px;margin:5px 0;}
+.qty button{background:#00ffd5;border:none;padding:5px;border-radius:5px;transition:0.2s;cursor:pointer;}
+.btn{width:100%;margin-top:5px;padding:8px;border:none;border-radius:10px;transition:0.2s;cursor:pointer;}
 .buy{background:#2ecc71;color:white;}
-
-/* CART */
-.cart{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:rgba(0,0,0,0.95);
-  padding:15px;
-  border-radius:20px 20px 0 0;
-  transition:0.3s;
-}
-
+.btn:active, .qty button:active{transform: scale(0.95);box-shadow:0 0 15px #00ffd5,0 0 30px #00ffd5;}
+.review{font-size:12px;text-align:left;margin-top:5px;background:rgba(255,255,255,0.05);padding:5px;border-radius:8px;max-height:80px;overflow:auto;}
+.avgRating{margin:5px 0;font-size:14px;}
+.cart{position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.95);padding:15px;border-radius:20px 20px 0 0;transition:0.3s;}
 .cart.hide{transform:translateY(100%);}
+.cart-toggle{position:fixed;bottom:20px;right:20px;background:#00ffd5;padding:15px;border-radius:50%;cursor:pointer;}
+.toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%);background:#00ffd5;color:black;padding:10px;border-radius:20px;display:none;}
+.card-buttons{display:flex;justify-content:space-between;margin-top:5px;}
 
-.cart-toggle{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#00ffd5;
-  padding:15px;
-  border-radius:50%;
-  cursor:pointer;
+/* Riwayat di kanan atas */
+#historyBox{
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:300px;
+    max-height:70%;
+    background:rgba(0,0,0,0.95);
+    padding:15px;
+    border-radius:15px;
+    overflow:auto;
+    display:none;
+    z-index:999;
 }
-
-.toast{
-  position:fixed;
-  bottom:120px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#00ffd5;
-  color:black;
-  padding:10px;
-  border-radius:20px;
-  display:none;
+#historyBox button{margin-bottom:10px;}
+#historyToggle{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#00ffd5;
+    color:black;
+    padding:10px;
+    border-radius:50%;
+    cursor:pointer;
+    z-index:1000;
 }
 </style>
 </head>
-
 <body>
 
-<div class="header">🛒 JYYR STORE</div>
+<div class="header">
+  <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo Store">
+  JYYR STORE
+</div>
 
 <input type="text" class="search" placeholder="Cari produk..." onkeyup="searchProduk(this.value)">
 
-<div class="banner">Apps Premium 🔥</div>
+<div style="text-align:center;margin:5px;">
+  <label><input type="checkbox" value="premium" onchange="filterProduk()"> Premium</label>
+  <label><input type="checkbox" value="pro" onchange="filterProduk()"> Pro</label>
+</div>
+<select id="filterHarga" onchange="filterProduk()">
+  <option value="all">Semua Harga</option>
+  <option value="murah">Termurah (<=15k)</option>
+  <option value="mahal">Termahal (>15k)</option>
+</select>
+<select id="sortProduk" onchange="sortProduk()">
+  <option value="default">Urutkan</option>
+  <option value="murah">Termurah</option>
+  <option value="mahal">Termahal</option>
+  <option value="populer">Populer</option>
+</select>
 
+<div class="banner">Apps Premium 🔥</div>
 <div class="container">
 
-<!-- PRODUCT A -->
-<div class="card" data-name="alight">
-<div class="badge">🔥 HOT</div>
-<img src="https://i.ibb.co.com/DDnvfpry/amprem.png">
-<h3>ALIGHT MOTION</h3>
-
-<p class="desc">✔ Premium 1 Tahun<br>✔ No Watermark</p>
-<button onclick="toggleDesc(this)">Detail</button>
-
-<p class="harga">Rp 10.000</p>
-
-<div class="qty">
-<button onclick="kurang('A')">-</button>
-<span id="A">0</span>
-<button onclick="tambah('A')">+</button>
+<!-- Produk ALIGHT -->
+<div class="card" data-name="alight" data-category="premium">
+  <div class="badge">🔥 HOT</div>
+  <img src="https://i.ibb.co.com/DDnvfpry/amprem.png">
+  <h3>ALIGHT MOTION</h3>
+  <p class="desc">✔ Premium 1 Tahun<br>✔ No Watermark</p>
+  <button onclick="toggleDesc(this)">Detail</button>
+  <p class="harga">Rp 10.000</p>
+  <p class="stok" id="stok-A">Stok: 10</p>
+  <p class="avgRating" id="avg-ALIGHT MOTION">⭐ 0.0</p>
+  <div class="qty">
+    <button onclick="kurang('A')">-</button>
+    <span id="A">0</span>
+    <button onclick="tambah('A')">+</button>
+  </div>
+  <div class="card-buttons">
+    <button class="btn" onclick="toggleWishlist('ALIGHT MOTION')">❤️ Favorit</button>
+    <button class="btn" onclick="tambahReview('ALIGHT MOTION')">⭐ Review</button>
+  </div>
+  <button class="btn buy" onclick="tambah('A')">Beli</button>
+  <div class="review" id="review-ALIGHT MOTION"></div>
 </div>
 
-<button class="btn buy" onclick="tambah('A')">Beli</button>
-<button class="btn" onclick="toggleWishlist('ALIGHT MOTION')">❤️ Favorit</button>
-</div>
-
-<!-- PRODUCT B -->
-<div class="card" data-name="capcut">
-<div class="badge">⭐ BEST SELLER</div>
-<img src="https://i.ibb.co.com/1tTwJKSc/Proyek-Baru-8-2-F337-C6.png">
-<h3>CAPCUT</h3>
-
-<p class="desc">✔ Pro Account<br>✔ No Watermark</p>
-<button onclick="toggleDesc(this)">Detail</button>
-
-<p class="harga">Rp 20.000</p>
-
-<div class="qty">
-<button onclick="kurang('B')">-</button>
-<span id="B">0</span>
-<button onclick="tambah('B')">+</button>
-</div>
-
-<button class="btn buy" onclick="tambah('B')">Beli</button>
-<button class="btn" onclick="toggleWishlist('CAPCUT')">❤️ Favorit</button>
+<!-- Produk CAPCUT -->
+<div class="card" data-name="capcut" data-category="pro">
+  <div class="badge">⭐ BEST SELLER</div>
+  <img src="https://i.ibb.co.com/1tTwJKSc/Proyek-Baru-8-2-F337-C6.png">
+  <h3>CAPCUT</h3>
+  <p class="desc">✔ Pro Account<br>✔ No Watermark</p>
+  <button onclick="toggleDesc(this)">Detail</button>
+  <p class="harga">Rp 20.000</p>
+  <p class="stok" id="stok-B">Stok: 5</p>
+  <p class="avgRating" id="avg-CAPCUT">⭐ 0.0</p>
+  <div class="qty">
+    <button onclick="kurang('B')">-</button>
+    <span id="B">0</span>
+    <button onclick="tambah('B')">+</button>
+  </div>
+  <div class="card-buttons">
+    <button class="btn" onclick="toggleWishlist('CAPCUT')">❤️ Favorit</button>
+    <button class="btn" onclick="tambahReview('CAPCUT')">⭐ Review</button>
+  </div>
+  <button class="btn buy" onclick="tambah('B')">Beli</button>
+  <div class="review" id="review-CAPCUT"></div>
 </div>
 
 </div>
 
 <!-- CART -->
 <div class="cart hide">
-<button onclick="toggleCart()">✖</button>
-
-<input id="nama" placeholder="Nama kamu...">
-
-<p id="list">Kosong</p>
-<p>Total: Rp <span id="total">0</span></p>
-
-<button class="btn buy" onclick="kirimWA()">Checkout</button>
-<button class="btn" onclick="lihatWishlist()">❤️ Wishlist</button>
-
+  <button onclick="toggleCart()">✖</button>
+  <input id="nama" placeholder="Nama kamu...">
+  <p id="list">Kosong</p>
+  <p>Total: Rp <span id="total">0</span></p>
+  <button class="btn buy" onclick="kirimWA()">Checkout</button>
+  <button class="btn" onclick="lihatWishlist()">❤️ Wishlist</button>
 </div>
 
 <div class="cart-toggle" onclick="toggleCart()">🛒</div>
 <div class="toast" id="toast"></div>
 
+<!-- Tombol toggle riwayat -->
+<div id="historyToggle" onclick="toggleHistory()">📦</div>
+
+<!-- Riwayat pesanan -->
+<div id="historyBox">
+  <button onclick="toggleHistory()">✖ Tutup</button>
+  <h3>📦 Riwayat Pesanan</h3>
+  <div id="historyList">Kosong</div>
+</div>
+
 <script>
-let cart={A:0,B:0}, harga={A:10000,B:20000};
+// Data
+let cart={A:0,B:0}, harga={A:10000,B:20000}, stok={A:10,B:5};
 let wishlist=JSON.parse(localStorage.getItem("wishlist"))||[];
+let reviewData = JSON.parse(localStorage.getItem("review")) || {};
+let historyData = JSON.parse(localStorage.getItem("history")) || [];
 
-function toggleCart(){
- document.querySelector(".cart").classList.toggle("hide");
-}
-
-function tambah(id){
- cart[id]++;
- update();
-}
-
-function kurang(id){
- if(cart[id]>0){cart[id]--;update();}
-}
-
+// Cart
+function toggleCart(){document.querySelector(".cart").classList.toggle("hide");}
+function tambah(id){if(cart[id]<stok[id]) cart[id]++; update();}
+function kurang(id){if(cart[id]>0) cart[id]--; update();}
 function update(){
- let total=0,text="";
- ["A","B"].forEach(id=>{
-  document.getElementById(id).innerText=cart[id];
-  if(cart[id]>0){
-   text+=(id=="A"?"ALIGHT":"CAPCUT")+" x"+cart[id]+"\n";
-   total+=cart[id]*harga[id];
-  }
- });
- document.getElementById("list").innerText=text||"Kosong";
- document.getElementById("total").innerText=total;
+  let total=0,text="";
+  ["A","B"].forEach(id=>{
+    document.getElementById(id).innerText=cart[id];
+    document.getElementById("stok-"+id).innerText="Stok: "+(stok[id]-cart[id]);
+    if(cart[id]>0){text+=(id=="A"?"ALIGHT":"CAPCUT")+" x"+cart[id]+"\n"; total+=cart[id]*harga[id];}
+  });
+  document.getElementById("list").innerText=text||"Kosong";
+  document.getElementById("total").innerText=total;
 }
 
-function toggleDesc(btn){
- btn.previousElementSibling.classList.toggle("show");
-}
+// Detail
+function toggleDesc(btn){btn.previousElementSibling.classList.toggle("show");}
 
+// Search
 function searchProduk(k){
- k=k.toLowerCase();
- document.querySelectorAll(".card").forEach(c=>{
-  c.style.display=c.dataset.name.includes(k)?"block":"none";
- });
+  k=k.toLowerCase();
+  document.querySelectorAll(".card").forEach(c=>c.style.display=c.dataset.name.includes(k)?"block":"none");
+  filterProduk(); sortProduk();
 }
 
-function toast(t){
- let el=document.getElementById("toast");
- el.innerText=t;
- el.style.display="block";
- setTimeout(()=>el.style.display="none",2000);
-}
+// Toast
+function toast(t){let el=document.getElementById("toast");el.innerText=t;el.style.display="block";setTimeout(()=>el.style.display="none",2000);}
 
+// Checkout
 function kirimWA(){
- let nama=document.getElementById("nama").value;
- if(!nama){toast("Isi nama!");return;}
- window.open("https://wa.me/6283890777348?text=Order dari "+nama);
+  let nama=document.getElementById("nama").value;
+  if(!nama){toast("Isi nama!");return;}
+  let text=document.getElementById("list").innerText;
+  let total=document.getElementById("total").innerText;
+  simpanRiwayat(text,total);
+  window.open("https://wa.me/6283890777348?text=Order dari "+nama+"\n"+text+"\nTotal: "+total);
 }
 
-// WISHLIST
+// Wishlist
 function toggleWishlist(nama){
- if(wishlist.includes(nama)){
-  wishlist=wishlist.filter(x=>x!==nama);
-  toast("❌ Dihapus");
- }else{
-  wishlist.push(nama);
-  toast("❤️ Ditambahkan");
- }
- localStorage.setItem("wishlist",JSON.stringify(wishlist));
+  if(wishlist.includes(nama)){wishlist=wishlist.filter(x=>x!==nama);toast("❌ Dihapus dari Wishlist");}
+  else{wishlist.push(nama);toast("❤️ Ditambahkan ke Wishlist");}
+  localStorage.setItem("wishlist",JSON.stringify(wishlist));
+}
+function lihatWishlist(){alert(wishlist.join("\n")||"Kosong");}
+
+// Review
+function tambahReview(nama){
+  let bintang = prompt("Kasih bintang (1-5):");
+  let komen = prompt("Komentar:");
+  if(!bintang || !komen) return;
+  let text="⭐".repeat(bintang)+" - "+komen;
+  if(!reviewData[nama]) reviewData[nama]=[];
+  reviewData[nama].push(text);
+  localStorage.setItem("review",JSON.stringify(reviewData));
+  tampilReview(); tampilRating();
+}
+function tampilReview(){for(let key in reviewData){let el=document.getElementById("review-"+key); if(el) el.innerHTML=reviewData[key].join("<br>");}}
+function tampilRating(){for(let key in reviewData){let el=document.getElementById("avg-"+key); if(el){let totalBintang = reviewData[key].reduce((sum,r)=>sum+r.split(" - ")[0].length,0); let avg = (totalBintang / reviewData[key].length).toFixed(1); el.innerText=`⭐ ${avg}`;}}}
+tampilReview(); tampilRating();
+
+// Riwayat
+function simpanRiwayat(text,total){historyData.push({waktu:new Date().toLocaleString(),pesanan:text,total:total}); localStorage.setItem("history",JSON.stringify(historyData));}
+function lihatRiwayat(){
+    let html="";
+    if(historyData.length===0){
+        html="Belum ada pesanan";
+    } else {
+        historyData.slice().reverse().forEach(item=>{
+            html+=`<div style="border-bottom:1px solid #555;padding:5px">
+            <small>${item.waktu}</small><br>${item.pesanan.replace(/\n/g,"<br>")}<br><b>Total: Rp ${item.total}</b></div>`;
+        });
+    }
+    document.getElementById("historyList").innerHTML=html;
+    toggleHistory();
+}
+function toggleHistory(){
+    const box = document.getElementById("historyBox");
+    box.style.display = (box.style.display==='block')?'none':'block';
 }
 
-function lihatWishlist(){
- alert(wishlist.join("\n")||"Kosong");
+// Filter & Sort
+function filterProduk(){
+  const checkedCats = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
+  let hargaFilter=document.getElementById("filterHarga").value;
+  document.querySelectorAll(".card").forEach(c=>{
+    let show=true;
+    if(checkedCats.length>0 && !checkedCats.includes(c.dataset.category)) show=false;
+    let price=parseInt(c.querySelector(".harga").innerText.replace(/\D/g,''));
+    if(hargaFilter==="murah" && price>15000) show=false;
+    if(hargaFilter==="mahal" && price<=15000) show=false;
+    c.style.display=show?"block":"none";
+  });
+}
+function sortProduk(){
+  let sel=document.getElementById("sortProduk").value;
+  let container=document.querySelector(".container");
+  let cards=Array.from(container.children);
+  cards.sort((a,b)=>{
+    let hargaA=parseInt(a.querySelector(".harga").innerText.replace(/\D/g,''));
+    let hargaB=parseInt(b.querySelector(".harga").innerText.replace(/\D/g,''));
+    let populerA=reviewData[a.querySelector("h3").innerText]?.length||0;
+    let populerB=reviewData[b.querySelector("h3").innerText]?.length||0;
+    if(sel==="murah") return hargaA-hargaB;
+    if(sel==="mahal") return hargaB-hargaA;
+    if(sel==="populer") return populerB-populerA;
+    return 0;
+  });
+  cards.forEach(c=>container.appendChild(c));
 }
 </script>
 
 </body>
-</html>
+  </html>
