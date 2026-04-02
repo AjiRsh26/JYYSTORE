@@ -540,25 +540,34 @@ function animatePlaceholder() {
 
 animatePlaceholder();
 
-  // ===== INTRO ANIMASI HURUF =====
-  window.addEventListener("load",()=>{
-    const text = "JYYR STORE";  // teks intro
-    const container = document.getElementById("introText");
+// ===== INTRO ANIMASI HURUF =====
+window.addEventListener("load", () => {
+  const text = "JYYR STORE";  // teks intro
+  const container = document.getElementById("introText");
 
-    // animasi huruf
-    text.split("").forEach((char, index)=>{
-      const span = document.createElement("span");
-      span.className = "letter";
-      span.style.animationDelay = `${index*0.12}s`; // delay tiap huruf
-      span.textContent = char;
-      container.appendChild(span);
-    });
+  if (!container) return; // aman jika elemen hilang
 
-    // hide intro setelah animasi selesai
-    setTimeout(()=>{
-      document.getElementById("intro").style.display="none";
-    }, text.length*120 + 1500); // panjang animasi huruf + buffer
+  // animasi huruf
+  text.split("").forEach((char, index) => {
+    const span = document.createElement("span");
+    span.className = "letter";
+    span.style.animationDelay = `${index * 0.08}s`; // delay tiap huruf lebih cepat
+    span.textContent = char;
+    container.appendChild(span);
   });
+
+  // hide intro setelah animasi selesai
+  const totalDuration = text.length * 80 + 800; // total animasi + buffer
+  setTimeout(() => {
+    const intro = document.getElementById("intro");
+    if (intro) {
+      // fade out agar smooth
+      intro.style.transition = "opacity 0.5s ease";
+      intro.style.opacity = 0;
+      setTimeout(() => intro.style.display = "none", 500);
+    }
+  }, totalDuration);
+});
 
   // ===== SEARCH PRODUK =====
   function searchProduk(keyword){
@@ -599,12 +608,4 @@ animatePlaceholder();
     let mode = document.getElementById("sortProduk").value;
 
     cards.sort((a,b)=>{
-      let hargaA = parseInt(a.querySelector(".harga").innerText.replace(/\D/g,""));
-      let hargaB = parseInt(b.querySelector(".harga").innerText.replace(/\D/g,""));
-
-      if(mode==="murah") return hargaA - hargaB;
-      if(mode==="mahal") return hargaB - hargaA;
-      return 0;
-    });
-
-    cards.forEach(card=>container.a
+      let hargaA = parseInt(a.querySelector(".harga").innerText.rep
