@@ -6,7 +6,7 @@
 <title>JYYR STORE</title>
 <style>
 /* ==========================
-   GLOBAL & BODY
+   IMPORT FONT & GLOBAL
 ========================== */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
@@ -29,14 +29,14 @@ body::before {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: url('https://i.ibb.co.com/7tRpCk53/d0a6f18951649da8da3614dc88cd9bc4.jpg') no-repeat center center;
+  background: url('https://i.ibb.co/7tRpCk53/d0a6f18951649da8da3614dc88cd9bc4.jpg') no-repeat center center;
   background-size: cover;
   filter: blur(6px) brightness(0.4);
   z-index: -1;
 }
 
 /* ==========================
-   ANIMASI NEON & GLOW
+   ANIMASI GLOW & NEON
 ========================== */
 @keyframes pulseGlowLogo {
   0%,100% { box-shadow: 0 0 5px #b266ff, 0 0 8px #b266ff; }
@@ -66,7 +66,7 @@ body::before {
 }
 
 /* ==========================
-   INTRO HURUF
+   INTRO ANIMASI HURUF
 ========================== */
 .letter {
   display: inline-block;
@@ -86,9 +86,7 @@ body::before {
 /* ==========================
    HEADER & BANNER
 ========================== */
-.header, .banner, .card h3 {
-  animation: pulseGlow 1.5s infinite;
-}
+.header, .banner, .card h3 { animation: pulseGlow 1.5s infinite; }
 
 .header {
   text-align: center;
@@ -121,7 +119,7 @@ body::before {
 }
 
 /* ==========================
-   SEARCH & FILTER
+   SEARCH, SELECT & PAYMENT
 ========================== */
 .search, select, #metodeBayar {
   width: 70%;
@@ -157,6 +155,12 @@ body::before {
   100% { opacity:0; }
 }
 
+#paymentInfo img { width:120px; margin-top:5px; border-radius:8px; }
+.pay-box { background:rgba(0,255,213,0.1); border:1px solid #00ffd5; padding:6px; border-radius:8px; margin-top:5px; font-size:12px; }
+#bukti { width:100%; margin-top:5px; font-size:12px; }
+#previewBukti { border:1px solid #00ffd5; }
+.copy-btn { margin-top:4px; background:#00ffd5; border:none; padding:4px 6px; border-radius:6px; cursor:pointer; font-size:11px; }
+
 /* ==========================
    CONTAINER & CARD
 ========================== */
@@ -189,7 +193,7 @@ body::before {
 
 .badge { position: absolute; top:4px; left:4px; background:red; padding:2px 6px; border-radius:8px; font-size:10px; }
 
-.desc { max-height:0; overflow:hidden; transition: max-height 0.4s ease, opacity 0.4s ease; opacity:0; font-size:13px; color:#ccc; }
+.desc { max-height:0; overflow:hidden; transition: max-height 0.4s ease, opacity 0.4s ease; opacity:0; font-size:13px; }
 .desc.show { max-height:500px; opacity:1; margin-top:8px; }
 
 .harga { background:#3498db; padding:4px; border-radius:8px; margin:4px 0; font-size:13px; }
@@ -218,16 +222,6 @@ body::before {
 .cart-toggle { position:fixed; bottom:15px; right:15px; background:#00ffd5; padding:12px; border-radius:50%; cursor:pointer; font-size:16px; }
 
 /* ==========================
-   PAYMENT & BUKTI
-========================== */
-#paymentInfo img { width:120px; margin-top:5px; border-radius:8px; }
-.pay-box { background:rgba(0,255,213,0.1); border:1px solid #00ffd5; padding:6px; border-radius:8px; margin-top:5px; font-size:12px; }
-
-#bukti { width:100%; margin-top:5px; font-size:12px; }
-#previewBukti { border:1px solid #00ffd5; }
-.copy-btn { margin-top:4px; background:#00ffd5; border:none; padding:4px 6px; border-radius:6px; cursor:pointer; font-size:11px; }
-
-/* ==========================
    STATUS & LOADING
 ========================== */
 .status { padding:3px 6px; border-radius:6px; font-size:11px; display:inline-block; margin-top:4px; }
@@ -250,7 +244,7 @@ body::before {
 #historyToggle { position:fixed; top:20px; right:20px; background:#00ffd5; color:black; padding:8px; border-radius:50%; cursor:pointer; z-index:1000; font-size:14px; }
 
 /* ==========================
-   BANNER PRODUK
+   PRODUCT BANNER
 ========================== */
 .product-banner {
   width: 90%;
@@ -259,12 +253,13 @@ body::before {
   padding: 20px 15px;
   border-radius: 12px;
   text-align: center;
-  background: linear-gradient(45deg, #3498db, #8f94fb);
+  background: rgba(0,0,0,0.5);
+  border: 2px solid #00ffd5;
   color: #00ffd5;
   font-family: 'Orbitron', sans-serif;
   text-shadow: 0 0 3px #00ffd5, 0 0 7px #b266ff, 0 0 15px #00bfff;
   box-shadow: 0 0 10px #00ffd5, 0 0 20px #b266ff;
-  animation: pulseGlow 2s infinite;
+  animation: glowText 2s infinite alternate;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -276,33 +271,13 @@ body::before {
 .product-banner h2 {
   font-size: 20px;
   margin-bottom: 8px;
+  color: #00ffd5;
+  text-shadow: 0 0 5px #00ffd5,0 0 10px #00bfff;
 }
 
 .product-banner p {
   font-size: 14px;
   opacity: 0.9;
-}
-
-/* Animasi glow dari CSS sebelumnya */
-@keyframes pulseGlow {
-  0%,100% { text-shadow: 0 0 1px #00ffd5,0 0 3px #00ffd5,0 0 6px #00ffd5; }
-  50% { text-shadow: 0 0 2px #00ffd5,0 0 6px #00ffd5,0 0 12px #00ffd5; }
-}
-
-.product-banner {
-  background: rgba(0,0,0,0.5);
-  border: 2px solid #00ffd5;
-  border-radius: 12px;
-  padding: 15px;
-  text-align: center;
-  margin: 10px;
-  animation: glowText 2s infinite alternate;
-}
-
-.product-banner h2 {
-  color: #00ffd5;
-  text-shadow: 0 0 5px #00ffd5,0 0 10px #00bfff;
-  margin-bottom: 10px;
 }
 
 .product-items {
@@ -343,45 +318,51 @@ body::before {
   color: #ccc;
   font-size: 12px;
 }
-
 </style>
 </head>
 <body>
-  <!-- ===== INTRO ===== -->
-<div id="intro" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;">
-  <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo" style="width:120px;animation:logoAnim 2s ease-out;">
-  <h1 id="introText" style="margin-top:20px;font-size:2em;letter-spacing:2px;color:#fff;text-align:center;"></h1>
-</div>
-
-<!-- QRIS PAYMENT MODAL -->
-<div id="qrisBox" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000cc;z-index:9999;align-items:center;justify-content:center;">
-  <div style="background:#111;padding:20px;border-radius:10px;text-align:center;width:90%;max-width:320px;">
-    <h3>💸 Pembayaran QRIS</h3>
-    <img src="https://i.ibb.co.com/84xg54VR/qrisjyyr.png" style="width:200px;margin:10px 0;border-radius:8px">
-    <h2 id="qrisTotal">Rp 0</h2>
-    <p>Scan QR lalu bayar sesuai nominal</p>
-
-    <!-- Tombol kirim bukti -->
-    <button onclick="kirimBukti()" style="margin-top:10px; padding:8px 12px; border:none; border-radius:6px; background:#00ffd5; cursor:pointer; font-weight:bold;">
-      📤 Kirim Bukti Pembayaran
-    </button>
-
-    <button onclick="tutupQRIS()" style="margin-top:10px; padding:6px 10px;">Tutup</button>
+  <!-- ==========================
+       INTRO
+  ========================== -->
+  <div id="intro" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;">
+    <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo" style="width:120px;animation:logoAnim 2s ease-out;">
+    <h1 id="introText" style="margin-top:20px;font-size:2em;letter-spacing:2px;color:#fff;text-align:center;"></h1>
   </div>
-</div>
+
+  <!-- ==========================
+       QRIS PAYMENT MODAL
+  ========================== -->
+  <div id="qrisBox" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000cc;z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#111;padding:20px;border-radius:10px;text-align:center;width:90%;max-width:320px;">
+      <h3>💸 Pembayaran QRIS</h3>
+      <img src="https://i.ibb.co.com/84xg54VR/qrisjyyr.png" style="width:200px;margin:10px 0;border-radius:8px">
+      <h2 id="qrisTotal">Rp 0</h2>
+      <p>Scan QR lalu bayar sesuai nominal</p>
+
+      <!-- Tombol kirim bukti -->
+      <button onclick="kirimBukti()" style="margin-top:10px; padding:8px 12px; border:none; border-radius:6px; background:#00ffd5; cursor:pointer; font-weight:bold;">
+        📤 Kirim Bukti Pembayaran
+      </button>
+
+      <button onclick="tutupQRIS()" style="margin-top:10px; padding:6px 10px;">Tutup</button>
+    </div>
+  </div>
 
   <audio id="notifSound" src="https://www.myinstants.com/media/sounds/ting.mp3"></audio>
 
-  <!-- HEADER -->
+  <!-- ==========================
+       HEADER
+  ========================== -->
   <div class="header">  
     <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo Store">  
     JYYR STORE  
   </div>
 
-  <!-- SEARCH BAR -->
+  <!-- ==========================
+       SEARCH & FILTER BAR
+  ========================== -->
   <input type="text" class="search" placeholder="🔍Cari produk..." onkeyup="searchProduk(this.value)">
 
-  <!-- FILTER BAR -->
   <div class="filter-bar">
     <div style="text-align:center;margin:5px;">
       <label><input type="checkbox" value="premium" onchange="filterProduk()"> Premium</label>
@@ -403,7 +384,9 @@ body::before {
 
   <div class="banner">Apps Premium 🔥</div>
 
-  <!-- PRODUK CONTAINER -->
+  <!-- ==========================
+       PRODUK CONTAINER
+  ========================== -->
   <div class="container">
 
     <!-- Produk ALIGHT MOTION -->
@@ -469,7 +452,9 @@ body::before {
 
   </div> <!-- END CONTAINER -->
 
-  <!-- CART -->
+  <!-- ==========================
+       CART
+  ========================== -->
   <div class="cart hide">
     <button onclick="toggleCart()">✖</button>
     <input id="nama" placeholder="Nama kamu...">
@@ -493,13 +478,19 @@ body::before {
     <button class="btn" onclick="lihatWishlist()">❤️ Wishlist</button>
   </div>
 
-  <!-- CART TOGGLE BUTTON -->
+  <!-- ==========================
+       CART TOGGLE BUTTON
+  ========================== -->
   <div class="cart-toggle" onclick="toggleCart()">🛒</div>
 
-  <!-- TOAST -->
+  <!-- ==========================
+       TOAST
+  ========================== -->
   <div class="toast" id="toast"></div>
 
-  <!-- RIWAYAT PESANAN -->
+  <!-- ==========================
+       RIWAYAT PESANAN
+  ========================== -->
   <div id="historyToggle" onclick="toggleHistory()">📦</div>
   <div id="historyBox">
     <button onclick="toggleHistory()">✖ Tutup</button>
@@ -509,103 +500,101 @@ body::before {
 </body>
 
 <script>
+  // ==========================
+  // ANIMASI PLACEHOLDER SEARCH
+  // ==========================
   const searchInput = document.querySelector(".search");
-const placeholders = [
-  "🔍 Cari ALIGHT MOTION favoritmu...",
-  "🔍 Cari CAPCUT pro account...",
-  "🔍 Temukan produk premium lainnya...",
-  "🔍 Ketik nama produk di sini..."
-];
+  const placeholders = [
+    "🔍 Cari ALIGHT MOTION favoritmu...",
+    "🔍 Cari CAPCUT pro account...",
+    "🔍 Temukan produk premium lainnya...",
+    "🔍 Ketik nama produk di sini..."
+  ];
+  let index = 0;
 
-let index = 0;
+  function animatePlaceholder() {
+    let text = placeholders[index];
+    let i = 0;
+    searchInput.placeholder = "";
 
-function animatePlaceholder() {
-  let text = placeholders[index];
-  let i = 0;
+    const interval = setInterval(() => {
+      searchInput.placeholder += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          index = (index + 1) % placeholders.length;
+          animatePlaceholder();
+        }, 2000);
+      }
+    }, 100);
+  }
 
-  searchInput.placeholder = "";
+  animatePlaceholder();
 
-  const interval = setInterval(() => {
-    searchInput.placeholder += text[i];
-    i++;
-    if (i >= text.length) {
-      clearInterval(interval);
-      setTimeout(() => {
-        index = (index + 1) % placeholders.length;
-        animatePlaceholder(); // loop ke placeholder berikutnya
-      }, 2000); // jeda sebelum pindah placeholder
-    }
-  }, 100); // kecepatan tiap huruf
-}
+  // ==========================
+  // ANIMASI INTRO TEXT
+  // ==========================
+  window.addEventListener("load", () => {
+    const text = "JYYR STORE";
+    const container = document.getElementById("introText");
+    if (!container) return;
 
-animatePlaceholder();
+    text.split("").forEach((char, idx) => {
+      const span = document.createElement("span");
+      span.className = "letter";
+      span.style.animationDelay = `${idx * 0.08}s`;
+      span.textContent = char;
+      container.appendChild(span);
+    });
 
-// ===== INTRO ANIMASI HURUF =====
-window.addEventListener("load", () => {
-  const text = "JYYR STORE";  // teks intro
-  const container = document.getElementById("introText");
-
-  if (!container) return; // aman jika elemen hilang
-
-  // animasi huruf
-  text.split("").forEach((char, index) => {
-    const span = document.createElement("span");
-    span.className = "letter";
-    span.style.animationDelay = `${index * 0.08}s`; // delay tiap huruf lebih cepat
-    span.textContent = char;
-    container.appendChild(span);
+    const totalDuration = text.length * 80 + 800;
+    setTimeout(() => {
+      const intro = document.getElementById("intro");
+      if (intro) {
+        intro.style.transition = "opacity 0.5s ease";
+        intro.style.opacity = 0;
+        setTimeout(() => (intro.style.display = "none"), 500);
+      }
+    }, totalDuration);
   });
 
-  // hide intro setelah animasi selesai
-  const totalDuration = text.length * 80 + 800; // total animasi + buffer
-  setTimeout(() => {
-    const intro = document.getElementById("intro");
-    if (intro) {
-      // fade out agar smooth
-      intro.style.transition = "opacity 0.5s ease";
-      intro.style.opacity = 0;
-      setTimeout(() => intro.style.display = "none", 500);
-    }
-  }, totalDuration);
-});
-
-  // ===== SEARCH PRODUK =====
-  function searchProduk(keyword){
+  // ==========================
+  // SEARCH PRODUK
+  // ==========================
+  function searchProduk(keyword) {
     let cards = document.querySelectorAll(".card");
     keyword = keyword.toLowerCase();
-
-    cards.forEach(card=>{
+    cards.forEach(card => {
       let nama = card.dataset.name.toLowerCase();
       card.style.display = nama.includes(keyword) ? "block" : "none";
     });
   }
 
-  // ===== FILTER PRODUK =====
-  function filterProduk(){
-    let checked = [...document.querySelectorAll("input[type=checkbox]:checked")].map(e=>e.value);
-    let hargaFilter = document.getElementById("filterHarga").value;
+  // ==========================
+  // FILTER PRODUK
+  // ==========================
+  function filterProduk() {
+    const checked = [...document.querySelectorAll("input[type=checkbox]:checked")].map(e => e.value);
+    const hargaFilter = document.getElementById("filterHarga").value;
 
-    document.querySelectorAll(".card").forEach(card=>{
-      let kategori = card.dataset.category;
-      let harga = parseInt(card.querySelector(".harga").innerText.replace(/\D/g,""));
-
+    document.querySelectorAll(".card").forEach(card => {
+      const kategori = card.dataset.category;
+      const harga = parseInt(card.querySelector(".harga").innerText.replace(/\D/g, ""));
       let show = true;
 
-      if(checked.length > 0 && !checked.includes(kategori)) show = false;
-
-      if(hargaFilter === "murah" && harga > 15000) show = false;
-      if(hargaFilter === "mahal" && (harga < 25000 || harga > 50000)) show = false;
-      if(hargaFilter === "populer" && harga < 70000) show = false;
+      if (checked.length > 0 && !checked.includes(kategori)) show = false;
+      if (hargaFilter === "murah" && harga > 15000) show = false;
+      if (hargaFilter === "mahal" && (harga < 25000 || harga > 50000)) show = false;
+      if (hargaFilter === "populer" && harga < 70000) show = false;
 
       card.style.display = show ? "block" : "none";
     });
   }
 
-  // ===== SORT PRODUK =====
-  function sortProduk(){
-    let container = document.querySelector(".container");
-    let cards = [...document.querySelectorAll(".card")];
-    let mode = document.getElementById("sortProduk").value;
-
-    cards.sort((a,b)=>{
-      let hargaA = parseInt(a.querySelector(".harga").innerText.rep
+  // ==========================
+  // SORT PRODUK
+  // ==========================
+  function sortProduk() {
+    const container = document.querySelector(".container");
+    const cards = [...docume
