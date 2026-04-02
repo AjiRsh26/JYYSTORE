@@ -209,6 +209,40 @@ body {
   cursor:pointer;
   font-size:12px;
 }
+
+.desc{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  opacity: 0;
+  font-size: 13px;
+  color: #ccc;
+}
+
+.desc.show{
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+button{
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+.card{
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 15px rgba(0,255,200,0.2);
+}
+
 .buy{background:#2ecc71;color:white;}
 .btn:active, .qty button:active{
   transform: scale(0.95);
@@ -316,9 +350,109 @@ body {
   transition: 0.3s;
 }
 
+#metodeBayar {
+  width: 100%;
+  margin: 5px 0;
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(0,255,213,0.1);
+  color: #00ffd5;
+  border: 1px solid #00ffd5;
+  font-size: 13px;
+}
+
+#paymentInfo img {
+  width: 120px;
+  margin-top: 5px;
+  border-radius: 8px;
+}
+
+.pay-box {
+  background: rgba(0,255,213,0.1);
+  border: 1px solid #00ffd5;
+  padding: 6px;
+  border-radius: 8px;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.copy-btn {
+  margin-top: 4px;
+  background: #00ffd5;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+#bukti {
+  width: 100%;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+#previewBukti {
+  border: 1px solid #00ffd5;
+}
+
+/* ===== STATUS WARNA ===== */
+.status {
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.pending {background: orange; color: black;}
+.sukses {background: #00ff88; color: black;}
+.selesai {background: #00bfff; color: white;}
+
+/* ===== LOADING BAR ===== */
+.loading {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  margin-top: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: "";
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: #00ffd5;
+  animation: loadingAnim 1s infinite;
+}
+
+@keyframes loadingAnim {
+  0% {transform: translateX(-100%);}
+  100% {transform: translateX(250%);}
+}
+
 </style>
 </head>
 <body>
+  <div id="qrisBox" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000cc;z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#111;padding:20px;border-radius:10px;text-align:center;width:90%;max-width:320px;">
+    
+    <h3>💸 Pembayaran QRIS</h3>
+
+    <img src="https://i.ibb.co.com/84xg54VR/qrisjyyr.png" style="width:200px;margin:10px 0;border-radius:8px">
+
+    <h2 id="qrisTotal">Rp 0</h2>
+
+    <p>Scan QR lalu bayar sesuai nominal</p>
+
+    <button onclick="tutupQRIS()">Tutup</button>
+  </div>
+</div>
+
+  <audio id="notifSound" src="https://www.myinstants.com/media/sounds/ting.mp3"></audio>
 
 <div class="header">  
   <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo Store">  
@@ -327,17 +461,19 @@ body {
 
 <input type="text" class="search" placeholder="🔍Cari produk..." onkeyup="searchProduk(this.value)">
 
+<div class="filter-bar">
 <div style="text-align:center;margin:5px;">
   <label><input type="checkbox" value="premium" onchange="filterProduk()"> Premium</label>
   <label><input type="checkbox" value="pro" onchange="filterProduk()"> Pro</label>
 </div>
 <select id="filterHarga" onchange="filterProduk()">
-  <option value="all">Semua Harga</option>
-  <option value="murah">Termurah (<=15k)</option>
-  <option value="mahal">Termahal (>15k)</option>
+  <option value="all">🏷️Semua Harga</option>
+  <option value="murah">(1k > 15k)</option>
+  <option value="mahal">(25k > 50k)</option>
+  <option value="populer">(70k >100k)</option>
 </select>
 <select id="sortProduk" onchange="sortProduk()">
-  <option value="default">Urutkan</option>
+  <option value="default">♻️Urutkan</option>
   <option value="murah">Termurah</option>
   <option value="mahal">Termahal</option>
   <option value="populer">Populer</option>
@@ -409,6 +545,20 @@ EMAIL SANGAT WAJIB BARU!<br>
 <div class="cart hide">
   <button onclick="toggleCart()">✖</button>
   <input id="nama" placeholder="Nama kamu...">
+
+<select id="metodeBayar" onchange="tampilPembayaran()">
+  <option value="QRIS">💳 QRIS</option>
+  <option value="DANA">💰 DANA</option>
+  <option value="OVO">🟣 OVO</option>
+  <option value="GOPAY">🟢 GOPAY</option>
+</select>
+
+<div id="paymentInfo" style="margin-top:6px;text-align:center;"></div>
+
+<label style="font-size:12px;">📤 Upload Bukti Transfer</label>
+<input type="file" id="bukti" accept="image/*">
+
+<img id="previewBukti" style="width:100%;margin-top:5px;border-radius:8px;display:none;">
   <p id="list">Kosong</p>
   <p>Total: Rp <span id="total">0</span></p>
   <button class="btn buy" onclick="kirimWA()">Checkout</button>
@@ -427,131 +577,245 @@ EMAIL SANGAT WAJIB BARU!<br>
   <h3>📦 Riwayat Pesanan</h3>
   <div id="historyList">Kosong</div>
 </div>
+</body>
 
 <script>
-// ===== Data =====
-let cart={A:0,B:0}, harga={A:10000,B:20000}, stok={A:216,B:275};
-let wishlist=JSON.parse(localStorage.getItem("wishlist"))||[];
-let reviewData = JSON.parse(localStorage.getItem("review")) || {};
-let historyData = JSON.parse(localStorage.getItem("history")) || [];
+  function toggleDesc(btn){
+    let desc = btn.previousElementSibling;
 
-// ===== Cart =====
-function toggleCart(){document.querySelector(".cart").classList.toggle("hide");}
-function tambah(id){if(cart[id]<stok[id]) cart[id]++; update();}
-function kurang(id){if(cart[id]>0) cart[id]--; update();}
-function update(){
-  let total=0,text="";
-  ["A","B"].forEach(id=>{
-    document.getElementById(id).innerText=cart[id];
-    document.getElementById("stok-"+id).innerText="Stok: "+(stok[id]-cart[id]);
-    if(cart[id]>0){text+=(id=="A"?"ALIGHT":"CAPCUT")+" x"+cart[id]+"\n"; total+=cart[id]*harga[id];}
+    if(desc.classList.contains("show")){
+      desc.classList.remove("show");
+      btn.innerText = "Detail";
+    } else {
+      desc.classList.add("show");
+      btn.innerText = "Tutup";
+    }
+  }
+
+  let currentOrder = null;
+
+  function bukaQRIS(total, order){
+    currentOrder = order;
+    document.getElementById("qrisTotal").innerText = "Rp " + total;
+    document.getElementById("qrisBox").style.display = "flex";
+  }
+
+  function tutupQRIS(){
+    document.getElementById("qrisBox").style.display = "none";
+  }
+
+  // ===== DATA (FIX STOK) =====
+  let cart={A:0,B:0}, harga={A:10000,B:20000}, stok={A:10,B:5};
+
+  let wishlist=JSON.parse(localStorage.getItem("wishlist"))||[];
+  let reviewData = JSON.parse(localStorage.getItem("review")) || {};
+  let historyData = JSON.parse(localStorage.getItem("history")) || [];
+
+  // ===== CART =====
+  function toggleCart(){
+    document.querySelector(".cart").classList.toggle("hide");
+  }
+
+  function tambah(id){
+    if(cart[id]<stok[id]) cart[id]++;
+    update();
+  }
+
+  function kurang(id){
+    if(cart[id]>0) cart[id]--;
+    update();
+  }
+
+  function update(){
+    let total=0,text="";
+    ["A","B"].forEach(id=>{
+      document.getElementById(id).innerText=cart[id];
+      document.getElementById("stok-"+id).innerText="Stok: "+(stok[id]-cart[id]);
+
+      if(cart[id]>0){
+        text+=(id=="A"?"ALIGHT MOTION":"CAPCUT")+" x"+cart[id]+"\n";
+        total+=cart[id]*harga[id];
+      }
+    });
+
+    document.getElementById("list").innerText=text||"Kosong";
+    document.getElementById("total").innerText=total;
+  }
+
+  // ===== TOAST =====
+  function toast(t){
+    let el=document.getElementById("toast");
+    el.innerText=t;
+    el.style.display="block";
+    setTimeout(()=>el.style.display="none",2000);
+  }
+
+  // ===== CHECKOUT =====
+  function kirimWA(){
+    let nama=document.getElementById("nama").value;
+    let metode=document.getElementById("metodeBayar").value;
+
+    if(!nama){toast("Isi nama!");return;}
+    if(Object.values(cart).every(q=>q===0)){
+      toast("Cart kosong!");
+      return;
+    }
+
+    let text="";
+    let total=0;
+
+    ["A","B"].forEach(id=>{
+      if(cart[id]>0){
+        let namaProduk = id=="A"?"ALIGHT MOTION":"CAPCUT";
+        text += `${namaProduk} x${cart[id]}\n`;
+        total += cart[id]*harga[id];
+      }
+    });
+
+    let orderId = "JYYR-" + Math.floor(Math.random()*999999);
+    let tanggal = new Date().toLocaleDateString("id-ID");
+
+    let struk = 
+`🧾 *STRUK PEMBELIAN*
+
+👤USER : ${nama}
+🆔ID :  ${orderId}
+📦PRODUK : ${text}💳PAYMENT : ${metode}
+📅TANGGAL : ${tanggal}
+💰HARGA : Rp ${total}
+
+💸 PROSES PESANAN SAYA`;
+
+    let dataOrder = {
+      waktu:new Date().toLocaleString(),
+      pesanan:struk,
+      total:total,
+      metode:metode,
+      status:"Menunggu Pembayaran ⏳"
+    };
+
+    historyData.push(dataOrder);
+    localStorage.setItem("history", JSON.stringify(historyData));
+
+    if(metode === "QRIS"){
+      bukaQRIS(total, dataOrder);
+    } else {
+      window.open(`https://wa.me/6283890777348?text=${encodeURIComponent(struk)}`);
+    }
+
+    toast("Order dibuat!");
+
+    cart={A:0,B:0};
+    update();
+  }
+
+  // ===== STATUS AUTO (FIX LOADING) =====
+  function updateStatusOtomatis(){
+    let now = Date.now();
+
+    historyData.forEach(item => {
+
+      if(!item.waktu) return;
+
+      let selisih = now - new Date(item.waktu).getTime();
+
+      if(selisih > 5000 && item.status.includes("Menunggu")){
+        item.status = "Sukses ✅";
+        document.getElementById("notifSound").play();
+      }
+
+      if(selisih > 10000 && item.status.includes("Sukses")){
+        item.status = "Selesai 🎉";
+        document.getElementById("notifSound").play();
+      }
+
+    });
+
+    localStorage.setItem("history", JSON.stringify(historyData));
+  }
+
+  // ===== RIWAYAT =====
+  function lihatRiwayat(){
+    let html = "";
+
+    if(historyData.length === 0){
+      html = "Belum ada pesanan";
+    } else {
+      historyData.slice().reverse().forEach(function(item){
+
+        let statusClass = "pending";
+        if(item.status.includes("Sukses")) statusClass="sukses";
+        if(item.status.includes("Selesai")) statusClass="selesai";
+
+        // 🔥 FIX LOADING
+        let loadingBar = item.status.includes("Menunggu") 
+          ? "<div class='loading'></div>" 
+          : "";
+
+        html += `
+        <div style="border-bottom:1px solid #555;padding:6px">
+          ${item.pesanan.replace(/\n/g,"<br>")}
+          <br>
+          <span class="status ${statusClass}">${item.status}</span>
+          ${loadingBar}
+        </div>`;
+      });
+    }
+
+    document.getElementById("historyList").innerHTML = html;
+  }
+
+  function toggleHistory(){
+    const box=document.getElementById("historyBox");
+    box.style.display=(box.style.display==='block')?'none':'block';
+    lihatRiwayat();
+  }
+
+  // ===== PREVIEW BUKTI (FIX) =====
+  document.getElementById("bukti").addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onload = function(){
+        let img = document.getElementById("previewBukti");
+        img.src = reader.result;
+        img.style.display = "block";
+      }
+      reader.readAsDataURL(file);
+    }
   });
-  document.getElementById("list").innerText=text||"Kosong";
-  document.getElementById("total").innerText=total;
-}
 
-// ===== Detail =====
-function toggleDesc(btn){btn.previousElementSibling.classList.toggle("show");}
+  // ===== DUMMY FUNCTION (BIAR GA ERROR) =====
+  function searchProduk(){ }
+  function filterProduk(){ }
+  function sortProduk(){ }
+  function toggleWishlist(){ }
+  function tambahReview(){ }
 
-// ===== Search =====
-function searchProduk(k){
-  k=k.toLowerCase();
-  document.querySelectorAll(".card").forEach(c=>c.style.display=c.dataset.name.includes(k)?"block":"none");
-  filterProduk(); sortProduk();
-}
+  function tampilPembayaran(){
+    let metode = document.getElementById("metodeBayar").value;
+    let box = document.getElementById("paymentInfo");
 
-// ===== Toast =====
-function toast(t){let el=document.getElementById("toast");el.innerText=t;el.style.display="block";setTimeout(()=>el.style.display="none",2000);}
+    if(metode === "DANA"){
+      box.innerHTML = "<div class='pay-box'>DANA: 083836898632</div>";
+    } 
+    else if(metode === "GOPAY"){
+      box.innerHTML = "<div class='pay-box'>GOPAY: 083836898632</div>";
+    }
+    else {
+      box.innerHTML = "<div class='pay-box'>Gunakan QRIS di atas</div>";
+    }
+  }
 
-// ===== Checkout =====
-function kirimWA(){
-  let nama=document.getElementById("nama").value;
-  if(!nama){toast("Isi nama!");return;}
-  let text=document.getElementById("list").innerText;
-  let total=document.getElementById("total").innerText;
-  simpanRiwayat(text,total);
-  window.open("https://wa.me/6283890777348?text=Order dari "+nama+"\n"+text+"\nTotal: "+total);
-}
+  // ===== AUTO LOOP =====
+  setInterval(()=>{
+    updateStatusOtomatis();
+    lihatRiwayat();
+  },1000);
 
-// ===== Wishlist =====
-function toggleWishlist(nama){
-  if(wishlist.includes(nama)){wishlist=wishlist.filter(x=>x!==nama);toast("❌ Dihapus dari Wishlist");}
-  else{wishlist.push(nama);toast("❤️ Ditambahkan ke Wishlist");}
-  localStorage.setItem("wishlist",JSON.stringify(wishlist));
-}
-function lihatWishlist(){alert(wishlist.join("\n")||"Kosong");}
-
-// ===== Review =====
-function tambahReview(nama){
-  let bintang = prompt("Kasih bintang (1-5):");
-  let komen = prompt("Komentar:");
-  if(!bintang || !komen) return;
-  let text="⭐".repeat(bintang)+" - "+komen;
-  if(!reviewData[nama]) reviewData[nama]=[];
-  reviewData[nama].push(text);
-  localStorage.setItem("review",JSON.stringify(reviewData));
-  tampilReview(); tampilRating();
-}
-function tampilReview(){for(let key in reviewData){let el=document.getElementById("review-"+key); if(el) el.innerHTML=reviewData[key].join("<br>");}}
-function tampilRating(){for(let key in reviewData){let el=document.getElementById("avg-"+key); if(el){let totalBintang = reviewData[key].reduce((sum,r)=>sum+r.split(" - ")[0].length,0); let avg = (totalBintang / reviewData[key].length).toFixed(1); el.innerText=`⭐ ${avg}`;}}}
-tampilReview(); tampilRating();
-
-// ===== Riwayat =====
-function simpanRiwayat(text,total){historyData.push({waktu:new Date().toLocaleString(),pesanan:text,total:total}); localStorage.setItem("history",JSON.stringify(historyData));}
-function lihatRiwayat(){
-  let html="";
-  if(historyData.length===0){ html="Belum ada pesanan"; } 
-  else { historyData.slice().reverse().forEach(item=>{
-      html+=`<div style="border-bottom:1px solid #555;padding:4px">
-      <small>${item.waktu}</small><br>${item.pesanan.replace(/\n/g,"<br>")}<br><b>Total: Rp ${item.total}</b></div>`;
-  });}
-  document.getElementById("historyList").innerHTML=html;
-  toggleHistory();
-}
-function toggleHistory(){const box=document.getElementById("historyBox"); box.style.display=(box.style.display==='block')?'none':'block';}
-
-// ===== Filter & Sort =====
-function filterProduk(){
-  const checkedCats = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
-  let hargaFilter=document.getElementById("filterHarga").value;
-  document.querySelectorAll(".card").forEach(c=>{
-    let show=true;
-    if(checkedCats.length>0 && !checkedCats.includes(c.dataset.category)) show=false;
-    let price=parseInt(c.querySelector(".harga").innerText.replace(/\D/g,''));
-    if(hargaFilter==="murah" && price>15000) show=false;
-    if(hargaFilter==="mahal" && price<=15000) show=false;
-    c.style.display=show?"block":"none";
-  });
-}
-function sortProduk(){
-  let sel=document.getElementById("sortProduk").value;
-  let container=document.querySelector(".container");
-  let cards=Array.from(container.children);
-  cards.sort((a,b)=>{
-    let hargaA=parseInt(a.querySelector(".harga").innerText.replace(/\D/g,''));
-    let hargaB=parseInt(b.querySelector(".harga").innerText.replace(/\D/g,''));
-    let populerA=reviewData[a.querySelector("h3").innerText]?.length||0;
-    let populerB=reviewData[b.querySelector("h3").innerText]?.length||0;
-    if(sel==="murah") return hargaA-hargaB;
-    if(sel==="mahal") return hargaB-hargaA;
-    if(sel==="populer") return populerB-populerA;
-    return 0;
-  });
-  cards.forEach(c=>container.appendChild(c));
-}
-
-// ===== Animate placeholder =====
-const placeholderText = "🔍Cari produk...";
-let index = 0;
-function animatePlaceholder() {
-  const searchInput = document.querySelector(".search");
-  searchInput.setAttribute("placeholder", placeholderText.substring(0,index));
-  index++;
-  if(index > placeholderText.length) index=0;
-  setTimeout(animatePlaceholder, 150);
-}
-animatePlaceholder();
+  // ===== AUTO LOAD =====
+  lihatRiwayat();
 </script>
 
 </body>
-  </html>
+    </html>
