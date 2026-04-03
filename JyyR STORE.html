@@ -20,7 +20,7 @@ body {
   transition: 0.3s;
   background: linear-gradient(270deg,#1a002f,#2c5364);
   background-size: 400% 400%;
-  animation: gradientMove 10s ease infinite;
+  animation: gradientMove 25s ease infinite;
 }
 
 /* Background image dengan blur + gelap */
@@ -86,6 +86,35 @@ body::before {
 /* ==========================
    HEADER & BANNER
 ========================== */
+/* ==========================
+   BRAND BANNER
+========================== */
+.brand-banner {
+  margin: 15px;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  box-shadow: 0 0 20px rgba(0,255,213,0.3);
+}
+
+.brand-banner h1 {
+  font-size: 24px;
+  color: #00ffd5;
+  text-shadow: 0 0 10px #00ffd5, 0 0 20px #00bfff;
+  margin-bottom: 5px;
+}
+
+.brand-banner p {
+  font-size: 14px;
+  color: #b266ff;
+  margin: 5px 0;
+}
+
+.brand-banner span {
+  font-size: 12px;
+  color: #ccc;
+}
 .header, .banner, .card h3 { animation: pulseGlow 1.5s infinite; }
 
 .header {
@@ -318,9 +347,153 @@ body::before {
   color: #ccc;
   font-size: 12px;
 }
+
+.trust-box {
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #00ffd5;
+  text-shadow: 0 0 5px #00ffd5;
+}
+
+.popup-beli {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.9);
+  color: #00ffd5;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 12px;
+  box-shadow: 0 0 10px rgba(0,255,213,0.4);
+  display: none;
+  animation: fadeIn 0.5s ease;
+  z-index: 9999;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.countdown-box {
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.6);
+  color: #ffcc00;
+  font-size: 14px;
+  box-shadow: 0 0 10px rgba(255,204,0,0.5);
+}
+
+#countdown {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* ==========================
+   CHAT BOT
+========================== */
+.chat-toggle {
+  position: fixed;
+  bottom: 80px;
+  right: 15px;
+  background: #00ffd5;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 999;
+}
+
+.chat-box {
+  position: fixed;
+  bottom: 140px;
+  right: 15px;
+  width: 260px;
+  background: rgba(0,0,0,0.95);
+  border-radius: 12px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.chat-header {
+  background: #00ffd5;
+  color: black;
+  padding: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.chat-content {
+  height: 200px;
+  overflow-y: auto;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.chat-content div {
+  margin-bottom: 5px;
+}
+
+.chat-user {
+  text-align: right;
+  color: #fff;
+}
+
+.chat-bot {
+  text-align: left;
+  color: #00ffd5;
+}
+
+#chatInput {
+  border: none;
+  padding: 8px;
+  outline: none;
+}
+
+/* ===== FIX FINAL STABIL ===== */
+
+/* 1. Biar background gak ganggu klik */
+body::before {
+  pointer-events: none;
+}
+
+/* 2. Kasih ruang buat cart */
+.container {
+  padding-bottom: 120px;
+}
+
+/* 3. Ringanin animasi */
+body {
+  animation-duration: 20s !important;
+}
+
+.header, .banner, .card h3 {
+  animation-duration: 3s !important;
+}
+
+/* 4. Hindari bug posisi input */
+.search, select, #metodeBayar {
+  position: static;
+}
+
+/* 5. Rapihin layer */
+#intro { z-index: 9999; }
+#qrisBox { z-index: 9998; }
+.cart { z-index: 500; }
+.chat-box { z-index: 900; }
 </style>
 </head>
 <body>
+    <p style="text-align:center;color:#ffcc00;">
+  ⚡ Promo Hari Ini - Diskon 50%
+</p>
+
   <!-- ==========================
        INTRO
   ========================== -->
@@ -350,13 +523,25 @@ body::before {
 
   <audio id="notifSound" src="https://www.myinstants.com/media/sounds/ting.mp3"></audio>
 
-  <!-- ==========================
-       HEADER
-  ========================== -->
-  <div class="header">  
-    <img src="https://i.ibb.co.com/5g01qPkM/profil-C466782.png" alt="Logo Store">  
-    JYYR STORE  
-  </div>
+<!-- ==========================
+     BRAND BANNER
+========================== -->
+<div class="brand-banner">
+  <h1>JYYR STORE</h1>
+  <p>🚀 Premium Apps & Private Service</p>
+  <span>Alight Motion • CapCut • DLL</span>
+</div>
+
+<div class="trust-box">
+  🔥 100+ Transaksi Hari Ini<br>
+  🟢 Admin Online 24 Jam<br>
+  ⭐ Rating 4.9 / 5
+</div>
+
+<div class="countdown-box">
+  ⏳ PROMO BERAKHIR DALAM:
+  <div id="countdown">00:00:00</div>
+</div>
 
   <!-- ==========================
        SEARCH & FILTER BAR
@@ -497,104 +682,534 @@ body::before {
     <h3>📦 Riwayat Pesanan</h3>
     <div id="historyList">Kosong</div>
   </div>
+  
+  <div id="popupBeli" class="popup-beli">
+  🔥 <span id="namaPopup"></span> baru saja beli <b id="produkPopup"></b>
+</div>
+
+<!-- ==========================
+     CHAT BOT
+========================== -->
+<div class="chat-toggle" onclick="toggleChat()">💬</div>
+
+<div id="chatBox" class="chat-box">
+  <div class="chat-header">🤖 JYYR BOT</div>
+  <div id="chatContent" class="chat-content"></div>
+  <input type="text" id="chatInput" placeholder="Tanya sesuatu..." onkeydown="if(event.key==='Enter') kirimChat()">
+</div>
 </body>
 
-<script>
-  // ==========================
-  // ANIMASI PLACEHOLDER SEARCH
-  // ==========================
-  const searchInput = document.querySelector(".search");
-  const placeholders = [
-    "🔍 Cari ALIGHT MOTION favoritmu...",
-    "🔍 Cari CAPCUT pro account...",
-    "🔍 Temukan produk premium lainnya...",
-    "🔍 Ketik nama produk di sini..."
-  ];
-  let index = 0;
+<script>  
+const searchInput = document.querySelector(".search");  
+const placeholders = [  
+  "🔍 Cari ALIGHT MOTION favoritmu...",  
+  "🔍 Cari CAPCUT pro account...",  
+  "🔍 Temukan produk premium lainnya...",  
+  "🔍 Ketik nama produk di sini..."  
+];  
 
-  function animatePlaceholder() {
-    let text = placeholders[index];
-    let i = 0;
-    searchInput.placeholder = "";
+let index = 0;  
 
-    const interval = setInterval(() => {
-      searchInput.placeholder += text[i];
-      i++;
-      if (i >= text.length) {
-        clearInterval(interval);
-        setTimeout(() => {
-          index = (index + 1) % placeholders.length;
-          animatePlaceholder();
-        }, 2000);
-      }
-    }, 100);
-  }
+function animatePlaceholder() {  
+  let text = placeholders[index];  
+  let i = 0;  
 
-  animatePlaceholder();
+  searchInput.placeholder = "";  
 
-  // ==========================
-  // ANIMASI INTRO TEXT
-  // ==========================
-  window.addEventListener("load", () => {
-    const text = "JYYR STORE";
-    const container = document.getElementById("introText");
-    if (!container) return;
+  const interval = setInterval(() => {  
+    searchInput.placeholder += text[i];  
+    i++;  
+    if (i >= text.length) {  
+      clearInterval(interval);  
+      setTimeout(() => {  
+        index = (index + 1) % placeholders.length;  
+        animatePlaceholder();  
+      }, 2000);  
+    }  
+  }, 100);  
+}  
 
-    text.split("").forEach((char, idx) => {
-      const span = document.createElement("span");
-      span.className = "letter";
-      span.style.animationDelay = `${idx * 0.08}s`;
-      span.textContent = char;
-      container.appendChild(span);
-    });
+animatePlaceholder();  
 
-    const totalDuration = text.length * 80 + 800;
-    setTimeout(() => {
-      const intro = document.getElementById("intro");
-      if (intro) {
-        intro.style.transition = "opacity 0.5s ease";
-        intro.style.opacity = 0;
-        setTimeout(() => (intro.style.display = "none"), 500);
-      }
-    }, totalDuration);
+// ===== INTRO ANIMASI HURUF =====  
+window.addEventListener("load", () => {  
+  const text = "JYYR STORE";  
+  const container = document.getElementById("introText");  
+
+  if (!container) return;  
+
+  text.split("").forEach((char, index) => {  
+    const span = document.createElement("span");  
+    span.className = "letter";  
+    span.style.animationDelay = `${index * 0.08}s`;  
+    span.textContent = char;  
+    container.appendChild(span);  
+  });  
+
+  const totalDuration = text.length * 80 + 800;  
+  setTimeout(() => {  
+    const intro = document.getElementById("intro");  
+    if (intro) {  
+      intro.style.transition = "opacity 0.5s ease";  
+      intro.style.opacity = 0;  
+      setTimeout(() => intro.style.display = "none", 500);  
+    }  
+  }, totalDuration);  
+});  
+
+// ===== SEARCH PRODUK =====  
+function searchProduk(keyword){  
+  let cards = document.querySelectorAll(".card");  
+  keyword = keyword.toLowerCase();  
+
+  cards.forEach(card=>{  
+    let nama = card.dataset.name.toLowerCase();  
+    card.style.display = nama.includes(keyword) ? "block" : "none";  
+  });  
+}  
+
+// ===== FILTER PRODUK =====  
+function filterProduk(){  
+  let checked = [...document.querySelectorAll("input[type=checkbox]:checked")].map(e=>e.value);  
+  let hargaFilter = document.getElementById("filterHarga").value;  
+
+  document.querySelectorAll(".card").forEach(card=>{  
+    let kategori = card.dataset.category;  
+    let harga = parseInt(card.querySelector(".harga").innerText.replace(/\D/g,""));  
+
+    let show = true;  
+
+    if(checked.length > 0 && !checked.includes(kategori)) show = false;  
+
+    if(hargaFilter === "murah" && harga > 15000) show = false;  
+    if(hargaFilter === "mahal" && (harga < 25000 || harga > 50000)) show = false;  
+    if(hargaFilter === "populer" && harga < 70000) show = false;  
+
+    card.style.display = show ? "block" : "none";  
+  });  
+}  
+
+// ===== SORT PRODUK =====  
+function sortProduk(){  
+  let container = document.querySelector(".container");  
+  let cards = [...document.querySelectorAll(".card")];  
+  let mode = document.getElementById("sortProduk").value;  
+
+  cards.sort((a,b)=>{  
+    let hargaA = parseInt(a.querySelector(".harga").innerText.replace(/\D/g,""));  
+    let hargaB = parseInt(b.querySelector(".harga").innerText.replace(/\D/g,""));  
+
+    if(mode==="murah") return hargaA - hargaB;  
+    if(mode==="mahal") return hargaB - hargaA;  
+    return 0;  
+  });  
+
+  cards.forEach(card=>container.appendChild(card));  
+}  
+
+// ===== WISHLIST =====  
+let wishlist = [];
+try { wishlist = JSON.parse(localStorage.getItem("wishlist")) || []; } catch(e){}
+
+function toggleWishlist(nama){  
+  if(wishlist.includes(nama)){  
+    wishlist = wishlist.filter(x=>x!==nama);  
+    toast("Dihapus dari favorit ❌");  
+  } else {  
+    wishlist.push(nama);  
+    toast("Ditambahkan ke favorit ❤️");  
+  }  
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));  
+}  
+
+function lihatWishlist(){  
+  if(wishlist.length === 0){  
+    toast("Wishlist kosong");  
+  } else {  
+    alert("❤️ Wishlist:\n\n" + wishlist.join("\n"));  
+  }  
+}  
+
+// ===== REVIEW + RATING =====  
+let reviewData = {};
+try { reviewData = JSON.parse(localStorage.getItem("review")) || {}; } catch(e){}
+
+function tambahReview(nama){  
+  let rating = prompt("Kasih rating 1-5 ⭐");  
+  if(!rating || rating<1 || rating>5){  
+    toast("Rating tidak valid");  
+    return;  
+  }  
+
+  let komentar = prompt("Tulis review kamu:");  
+
+  if(!reviewData[nama]) reviewData[nama]=[];  
+
+  reviewData[nama].push({  
+    rating: parseInt(rating),  
+    komentar: komentar || "-"  
+  });  
+
+  localStorage.setItem("review", JSON.stringify(reviewData));  
+  tampilReview(nama);  
+}  
+
+function tampilReview(nama){  
+  let box = document.getElementById("review-"+nama);  
+  let avgBox = document.getElementById("avg-"+nama);  
+
+  let data = reviewData[nama] || [];  
+
+  if(data.length === 0){  
+    box.innerHTML = "Belum ada review";  
+    avgBox.innerText = "⭐ 0.0";  
+    return;  
+  }  
+
+  let total = 0;  
+  let html = "";  
+
+  data.forEach(r=>{  
+    total += r.rating;  
+    html += `⭐ ${r.rating} - ${r.komentar}<br>`;  
+  });  
+
+  let avg = (total / data.length).toFixed(1);  
+
+  avgBox.innerText = "⭐ " + avg;  
+  box.innerHTML = html;  
+}  
+
+window.addEventListener("load", function(){  
+  tampilReview("ALIGHT MOTION");  
+  tampilReview("CAPCUT");  
+});  
+
+// ===== DESC TOGGLE =====  
+function toggleDesc(btn){  
+  let desc = btn.previousElementSibling;  
+
+  if(desc.classList.contains("show")){  
+    desc.classList.remove("show");  
+    btn.innerText = "Detail";  
+  } else {  
+    desc.classList.add("show");  
+    btn.innerText = "Tutup";  
+  }  
+}  
+
+// ===== QRIS =====  
+let currentOrder = null;  
+
+function bukaQRIS(total, order){  
+  currentOrder = order;  
+  document.getElementById("qrisTotal").innerText = "Rp " + total;  
+  document.getElementById("qrisBox").style.display = "flex";  
+}  
+
+function tutupQRIS(){  
+  document.getElementById("qrisBox").style.display = "none";  
+}  
+
+function kirimBukti(){  
+  const fileInput = document.getElementById('bukti');  
+  if(fileInput && fileInput.files.length === 0){  
+    alert("Silakan pilih file bukti terlebih dahulu!");  
+    return;  
+  }  
+
+  const file = fileInput.files[0];  
+  alert(`Bukti ${file.name} siap dikirim!`);  
+
+  tutupQRIS();  
+}  
+
+// ===== DATA =====  
+let cart = {A:0,B:0};  
+let harga = {A:10000,B:20000};  
+let stok = {A:10,B:5};  
+let historyData = [];
+try { historyData = JSON.parse(localStorage.getItem("history")) || []; } catch(e){}
+
+// ===== CART =====  
+function toggleCart(){  
+  document.querySelector(".cart").classList.toggle("hide");  
+}  
+
+function tambah(id){  
+  if(cart[id] < stok[id]) cart[id]++;  
+  update();  
+}  
+
+function kurang(id){  
+  if(cart[id] > 0) cart[id]--;  
+  update();  
+}  
+
+function update(){  
+  let total=0,text="";  
+  ["A","B"].forEach(id=>{  
+    document.getElementById(id).innerText=cart[id];  
+    document.getElementById("stok-"+id).innerText="Stok: "+(stok[id]-cart[id]);  
+
+    if(cart[id]>0){  
+      text += (id=="A"?"ALIGHT MOTION":"CAPCUT") + " x"+cart[id]+"\n";  
+      total += cart[id]*harga[id];  
+    }  
+  });  
+
+  document.getElementById("list").innerText = text || "Kosong";  
+  document.getElementById("total").innerText = total;  
+}  
+
+// ===== TOAST MODERN =====  
+function toast(msg){  
+  let el = document.getElementById("toast");  
+  el.innerText = msg;  
+  el.style.opacity = "1";  
+  el.style.transform = "translateY(0)";  
+  el.style.display = "block";  
+  setTimeout(()=>{  
+    el.style.opacity = "0";  
+    el.style.transform = "translateY(-20px)";  
+    setTimeout(()=>el.style.display="none",300);  
+  },2000);  
+}  
+
+// ===== CHECKOUT =====  
+function kirimWA(){  
+  let nama = document.getElementById("nama").value;  
+  let metode = document.getElementById("metodeBayar").value;  
+
+  if(!nama){toast("Isi nama!");return;}  
+  if(Object.values(cart).every(q=>q===0)){  
+    toast("Cart kosong!");  
+    return;  
+  }  
+
+  let text="";  
+  let total=0;  
+
+  ["A","B"].forEach(id=>{  
+    if(cart[id]>0){  
+      let namaProduk = id=="A"?"ALIGHT MOTION":"CAPCUT";  
+      text += `${namaProduk} x${cart[id]}\n`;  
+      total += cart[id]*harga[id];  
+    }  
+  });  
+
+  let orderId = "JYYR-" + Math.floor(Math.random()*999999);  
+  let tanggal = new Date().toLocaleDateString("id-ID");  
+
+  let struk = `🧾 *STRUK PEMBELIAN*\n\n👤USER : ${nama}\n🆔ID : ${orderId}\n📦PRODUK : ${text}💳PAYMENT : ${metode}\n📅TANGGAL : ${tanggal}\n💰HARGA : Rp ${total}\n\n💸 PROSES PESANAN SAYA`;  
+
+  let dataOrder = {  
+    waktu: new Date().toLocaleString(),  
+    pesanan: struk,  
+    total: total,  
+    metode: metode,  
+    status: "Menunggu Pembayaran ⏳"  
+  };  
+
+  historyData.push(dataOrder);  
+  localStorage.setItem("history", JSON.stringify(historyData));  
+
+  if(metode === "QRIS"){  
+    bukaQRIS(total, dataOrder);  
+  } else {  
+    window.open(`https://wa.me/6283890777348?text=${encodeURIComponent(struk)}`);  
+  }  
+
+  toast("Order dibuat!");  
+  cart = {A:0,B:0};  
+  update();  
+}  
+
+// ===== STATUS OTOMATIS =====  
+function updateStatusOtomatis(){  
+  let now = Date.now();  
+
+  historyData.forEach(item => {  
+    if(!item.waktu) return;  
+    const waktuItem = new Date(item.waktu).getTime();
+    if(isNaN(waktuItem)) return;
+    let selisih = now - waktuItem;  
+
+    if(selisih > 5000 && item.status.includes("Menunggu")){  
+      item.status = "Sukses ✅";  
+      const notif = document.getElementById("notifSound");  
+      if(notif) notif.play();
+    }  
+
+    if(selisih > 10000 && item.status.includes("Sukses")){  
+      item.status = "Selesai 🎉";  
+      const notif = document.getElementById("notifSound");  
+      if(notif) notif.play();
+    }  
+  });  
+
+  localStorage.setItem("history", JSON.stringify(historyData));  
+}  
+
+// ===== RIWAYAT =====  
+function lihatRiwayat(){  
+  let html = "";  
+
+  if(historyData.length === 0){  
+    html = "Belum ada pesanan";  
+  } else {  
+    historyData.slice().reverse().forEach(function(item){  
+      let statusClass = "pending";  
+      if(item.status.includes("Sukses")) statusClass="sukses";  
+      if(item.status.includes("Selesai")) statusClass="selesai";  
+
+      let loadingBar = item.status.includes("Menunggu") ? "<div class='loading'></div>" : "";  
+
+      html += `<div style="border-bottom:1px solid #555;padding:6px">${item.pesanan.replace(/\n/g,"<br>")}<br><span class="status ${statusClass}">${item.status}</span>${loadingBar}</div>`;  
+    });  
+  }  
+
+  document.getElementById("historyList").innerHTML = html;  
+}  
+
+function toggleHistory(){  
+  const box=document.getElementById("historyBox");  
+  box.style.display = (box.style.display==='block')?'none':'block';  
+  lihatRiwayat();  
+}  
+
+// ===== PREVIEW BUKTI =====  
+const buktiInput = document.getElementById("bukti");
+if(buktiInput){
+  buktiInput.addEventListener("change", function(e){  
+    const file = e.target.files[0];  
+    if(file){  
+      const reader = new FileReader();  
+      reader.onload = function(){  
+        let img = document.getElementById("previewBukti");  
+        if(img){
+          img.src = reader.result;  
+          img.style.display = "block";  
+        }
+      }  
+      reader.readAsDataURL(file);  
+    }  
   });
+}
 
-  // ==========================
-  // SEARCH PRODUK
-  // ==========================
-  function searchProduk(keyword) {
-    let cards = document.querySelectorAll(".card");
-    keyword = keyword.toLowerCase();
-    cards.forEach(card => {
-      let nama = card.dataset.name.toLowerCase();
-      card.style.display = nama.includes(keyword) ? "block" : "none";
-    });
+// ===== METODE PEMBAYARAN =====  
+function tampilPembayaran(){  
+  let metode = document.getElementById("metodeBayar").value;  
+  let box = document.getElementById("paymentInfo");  
+
+  if(metode === "DANA"){  
+    box.innerHTML = "<div class='pay-box'>DANA: 083836898632</div>";  
+  } else if(metode === "GOPAY"){  
+    box.innerHTML = "<div class='pay-box'>GOPAY: 083836898632</div>";  
+  } else {  
+    box.innerHTML = "<div class='pay-box'>Gunakan QRIS di atas</div>";  
+  }  
+}  
+
+const metodeBayarEl = document.getElementById("metodeBayar");
+if(metodeBayarEl) metodeBayarEl.addEventListener("change", tampilPembayaran);  
+
+// ===== AUTO LOOP =====  
+setInterval(()=>{  
+  updateStatusOtomatis();  
+  lihatRiwayat();  
+},1000);  
+
+// ===== AUTO LOAD =====  
+lihatRiwayat();  
+
+const namaRandom = ["User TikTok","Pembeli Baru","Customer","Member VIP"];
+const produkRandom = ["ALIGHT MOTION","CAPCUT PRO","PREMIUM APP","EDITING PACK"];
+
+function randomPopup(){
+  let nama = namaRandom[Math.floor(Math.random()*namaRandom.length)];
+  let produk = produkRandom[Math.floor(Math.random()*produkRandom.length)];
+
+  document.getElementById("namaPopup").innerText = nama;
+  document.getElementById("produkPopup").innerText = produk;
+
+  let popup = document.getElementById("popupBeli");
+  popup.style.display = "block";
+
+  setTimeout(()=>{
+    popup.style.display = "none";
+  },3000);
+}
+
+// munculin tiap 8 detik
+setInterval(randomPopup, 8000);
+
+// SET WAKTU (misal 1 jam)
+let waktu = 3600;
+
+function updateCountdown(){
+  let jam = Math.floor(waktu / 3600);
+  let menit = Math.floor((waktu % 3600) / 60);
+  let detik = waktu % 60;
+
+  document.getElementById("countdown").innerText =
+    `${jam.toString().padStart(2,'0')}:` +
+    `${menit.toString().padStart(2,'0')}:` +
+    `${detik.toString().padStart(2,'0')}`;
+
+  if(waktu > 0){
+    waktu--;
+  }
+}
+
+setInterval(updateCountdown,1000);
+
+if(waktu <= 0){
+  document.querySelector(".countdown-box").innerHTML =
+    "❌ PROMO SUDAH BERAKHIR";
+}
+
+function toggleChat(){
+  let box = document.getElementById("chatBox");
+  box.style.display = box.style.display === "flex" ? "none" : "flex";
+}
+
+// ==========================
+// AUTO JAWAB
+// ==========================
+function kirimChat(){
+  let input = document.getElementById("chatInput");
+  let text = input.value.toLowerCase();
+  if(!text) return;
+
+  let chat = document.getElementById("chatContent");
+
+  // tampilkan pesan user
+  chat.innerHTML += `<div class="chat-user">🧑 ${text}</div>`;
+
+  let jawab = "Maaf, saya tidak mengerti 😅";
+
+  if(text.includes("harga")){
+    jawab = "Harga mulai dari Rp10.000 kak 👍";
+  }
+  else if(text.includes("produk")){
+    jawab = "Kami menyediakan Alight Motion & CapCut premium 🔥";
+  }
+  else if(text.includes("bayar")){
+    jawab = "Bisa pakai QRIS, DANA, OVO, GOPAY 💳";
+  }
+  else if(text.includes("admin")){
+    jawab = "Admin fast respon via WhatsApp ya 😊";
   }
 
-  // ==========================
-  // FILTER PRODUK
-  // ==========================
-  function filterProduk() {
-    const checked = [...document.querySelectorAll("input[type=checkbox]:checked")].map(e => e.value);
-    const hargaFilter = document.getElementById("filterHarga").value;
+  // balasan bot
+  setTimeout(()=>{
+    chat.innerHTML += `<div class="chat-bot">🤖 ${jawab}</div>`;
+    chat.scrollTop = chat.scrollHeight;
+  },500);
 
-    document.querySelectorAll(".card").forEach(card => {
-      const kategori = card.dataset.category;
-      const harga = parseInt(card.querySelector(".harga").innerText.replace(/\D/g, ""));
-      let show = true;
-
-      if (checked.length > 0 && !checked.includes(kategori)) show = false;
-      if (hargaFilter === "murah" && harga > 15000) show = false;
-      if (hargaFilter === "mahal" && (harga < 25000 || harga > 50000)) show = false;
-      if (hargaFilter === "populer" && harga < 70000) show = false;
-
-      card.style.display = show ? "block" : "none";
-    });
-  }
-
-  // ==========================
-  // SORT PRODUK
-  // ==========================
-  function sortProduk() {
-    const container = document.querySelector(".container");
-    const cards = [...docume
+  input.value = "";
+}
+</script>
+</body>
+   </html>
